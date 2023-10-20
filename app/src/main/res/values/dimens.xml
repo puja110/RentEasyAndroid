@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="screen_orientation_portrait">1</integer>
+    <!--MARGIN/PADDING-->
+    <dimen name="spacing_1">1dp</dimen>
+    <dimen name="spacing_2">2dp</dimen>
+    <dimen name="spacing_3">3dp</dimen>
+    <dimen name="spacing_4">4dp</dimen>
+    <dimen name="spacing_5">5dp</dimen>
+    <dimen name="spacing_6">6dp</dimen>
+    <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_10">10dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_14">14dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_18">18dp</dimen>
+    <dimen name="spacing_20">20dp</dimen>
+    <dimen name="spacing_22">22dp</dimen>
+    <dimen name="spacing_24">24dp</dimen>
+    <dimen name="spacing_26">26dp</dimen>
+    <dimen name="spacing_28">28dp</dimen>
+    <dimen name="spacing_30">30dp</dimen>
+    <dimen name="spacing_32">32dp</dimen>
+    <dimen name="spacing_36">36dp</dimen>
+    <dimen name="spacing_38">38dp</dimen>
+    <dimen name="spacing_40">40dp</dimen>
+    <dimen name="spacing_48">48dp</dimen>
+    <dimen name="spacing_50">50dp</dimen>
+    <dimen name="spacing_54">54dp</dimen>
+    <dimen name="spacing_56">56dp</dimen>
+    <dimen name="spacing_64">64dp</dimen>
+    <dimen name="spacing_80">80dp</dimen>
+    <dimen name="spacing_72">72dp</dimen>
+    <dimen name="spacing_92">92dp</dimen>
+
+    <!--TEXT SIZE-->
+    <dimen name="text_size_2">2sp</dimen>
+    <dimen name="text_size_6">6sp</dimen>
+    <dimen name="text_size_8">8sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_11">11sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">103dp</dimen>
+    <dimen name="nav_header_image">34dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="spacing_104">104dp</dimen>
+    <dimen name="text_size_28">28sp</dimen>
+    <dimen name="text_size_36">36sp</dimen>
+    <dimen name="text_size_48">48sp</dimen>
+    <dimen name="spacing_90">90dp</dimen>
+    <dimen name="banner_height">134dp</dimen>
+    <dimen name="sku_image_height">136dp</dimen>
+    <dimen name="sub_brand_image_dimen">70dp</dimen>
+    <dimen name="spacing_120">120dp</dimen>
+    <dimen name="spacing_96">96dp</dimen>
+
+</resources>

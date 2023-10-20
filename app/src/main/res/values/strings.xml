@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">RentEasyAndroid</string>
+    <string name="app_name">RentalDemo</string>
+    <string name="email">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="get_code">Get Code</string>
+    <string name="verify">Verify</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
 </resources>
