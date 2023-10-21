@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityLoginBinding
+import com.example.renteasyandroid.feature.auth.forgotpassword.ForgotPasswordActivity
 import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -29,6 +30,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
         binding.btnCreateAccount.setOnClickListener {
             RegisterActivity.start(this)
+        }
+        binding.tvForgotPassword.setOnClickListener {
+            ForgotPasswordActivity.start(this)
         }
     }
 
