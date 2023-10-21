@@ -297,7 +297,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_login"
+                android:id="@+id/btnRegister"
                 style="@style/button_style_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -324,9 +324,9 @@
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/btn_login"
-                app:layout_constraintStart_toStartOf="@+id/btn_login"
-                app:layout_constraintTop_toBottomOf="@+id/btn_login"
+                app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+                app:layout_constraintStart_toStartOf="@+id/btnRegister"
+                app:layout_constraintTop_toBottomOf="@+id/btnRegister"
                 app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

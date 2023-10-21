@@ -23,9 +23,6 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.btnConfirm.setOnClickListener {
-            LoginActivity.start(this)
-        }
     }
 
     override fun initObservers() {
