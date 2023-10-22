@@ -14,6 +14,7 @@
     <string name="last_name">Last Name</string>
     <string name="back_to_login">Back to Login</string>
     <string name="verify_email">Verify Email</string>
+    <string name="verify_email_success_msg">Email verified successfully!</string>
     <string name="enter_code">Enter Code</string>
     <string name="get_code">Get Code</string>
     <string name="verify">Verify</string>
