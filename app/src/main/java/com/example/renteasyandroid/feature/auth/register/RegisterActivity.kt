@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityRegisterBinding
+import com.example.renteasyandroid.feature.auth.forgotpassword.VerifyEmailActivity
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
@@ -24,6 +25,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
         super.onCreate(savedInstanceState)
         binding.tvBackToLogin.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+        }
+        binding.btnRegister.setOnClickListener {
+            VerifyEmailActivity.start(this)
         }
     }
 

@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityForgotPasswordBinding
-import com.example.renteasyandroid.feature.auth.login.LoginActivity
 
 class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
@@ -23,6 +22,9 @@ class ForgotPasswordActivity : BaseActivity<ActivityForgotPasswordBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.btnConfirm.setOnClickListener {
+            VerifyEmailActivity.start(this)
+        }
     }
 
     override fun initObservers() {
