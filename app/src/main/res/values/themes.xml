@@ -32,4 +32,10 @@
         <item name="android:padding">@dimen/spacing_16</item>
         <item name="fontFamily">@font/sansf_regular</item>
     </style>
+
+    <style name="Menu.TextAppearance" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:fontFamily">@font/sansf_regular</item>
+        <item name="android:textColor">@drawable/menu_item_selector</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
 </resources>
