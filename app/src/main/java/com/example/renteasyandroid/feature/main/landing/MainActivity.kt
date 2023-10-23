@@ -1,4 +1,4 @@
-package com.example.renteasyandroid.feature.main
+package com.example.renteasyandroid.feature.main.landing
 
 import android.app.Activity
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityMainBinding
+import com.example.renteasyandroid.feature.main.landing.home.HomeFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -22,8 +23,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setDefaultFragment(savedInstanceState)
     }
 
     override fun initObservers() {
+    }
+
+    private fun setDefaultFragment(savedInstanceState: Bundle?) {
+        if(savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.main_container,
+                    HomeFragment.getInstance()
+                ).commit()
+        }
     }
 }

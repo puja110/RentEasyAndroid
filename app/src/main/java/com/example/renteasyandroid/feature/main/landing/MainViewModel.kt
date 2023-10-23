@@ -1,4 +1,4 @@
-package com.example.renteasyandroid.feature.main
+package com.example.renteasyandroid.feature.main.landing
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner

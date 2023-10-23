@@ -9,7 +9,7 @@ import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityLoginBinding
 import com.example.renteasyandroid.feature.auth.forgotpassword.ForgotPasswordActivity
 import com.example.renteasyandroid.feature.auth.register.RegisterActivity
-import com.example.renteasyandroid.feature.main.MainActivity
+import com.example.renteasyandroid.feature.main.landing.MainActivity
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
