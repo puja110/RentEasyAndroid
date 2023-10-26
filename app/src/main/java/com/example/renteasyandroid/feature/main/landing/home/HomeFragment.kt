@@ -16,6 +16,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel: MainViewModel by viewModels()
 
     private var adapter: CategoriesAdapter? = null
+    private var rAdapter: RecentlyUpdatedAdapter? = null
 
     override fun layout(): Int = R.layout.fragment_home
 
