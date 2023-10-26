@@ -30,4 +30,5 @@
     <string name="search_address_city_location">Search address, city, location</string>
     <string name="categories">Categories</string>
     <string name="see_more">See More</string>
+    <string name="recently_updated">Recently Updated</string>
 </resources>

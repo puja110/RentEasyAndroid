@@ -95,6 +95,44 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/item_categories" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recently_updated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/recently_updated"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_categories" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recently_updated_see_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sansf_regular"
+                    android:padding="@dimen/spacing_4"
+                    android:text="@string/see_more"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_recently_updated"
+                    app:layout_constraintEnd_toEndOf="@+id/include_search"
+                    app:layout_constraintStart_toEndOf="@+id/tv_recently_updated"
+                    app:layout_constraintTop_toTopOf="@+id/tv_recently_updated" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recently_updated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@id/tv_recently_updated"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recently_updated"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_recently_updated" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

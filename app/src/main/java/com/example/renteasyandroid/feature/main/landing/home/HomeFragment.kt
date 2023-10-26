@@ -29,10 +29,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getCategoriesResponse()
+        viewModel.getRecentlyUpdatedResponse()
     }
 
     override fun initObservers() {
         observeGroceryResponse()
+        observeRecentlyUpdatedResponse()
     }
 
     private fun observeGroceryResponse() {
@@ -52,6 +54,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         adapter = CategoriesAdapter(it.toMutableList()) { response -> }
                         binding.rvCategories.layoutManager = layoutManager
                         binding.rvCategories.adapter = adapter
+                    }
+                }
+
+                Status.ERROR -> {
+
+                }
+            }
+        }
+    }
+
+    private fun observeRecentlyUpdatedResponse() {
+        viewModel.recentResponse.observe(this) { response ->
+            when (response.status) {
+                Status.LOADING -> {
+
+                }
+
+                Status.COMPLETE -> {
+                    response.data?.let {
+                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response -> }
+                        binding.rvRecentlyUpdated.adapter = rAdapter
                     }
                 }
 

@@ -2,6 +2,7 @@ package com.example.renteasyandroid.feature.main.data
 
 import com.example.renteasyandroid.feature.main.data.local.MainLocalImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
+import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.feature.main.data.remote.MainRemoteImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -30,6 +31,12 @@ class MainRepositoryImpl constructor(
     override suspend fun getCategories(): List<CategoryResponse> {
         return withContext(Dispatchers.IO) {
             remoteRepository.getCategories()
+        }
+    }
+
+    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.getRecentlyUpdatedResponse()
         }
     }
 }
