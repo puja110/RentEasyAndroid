@@ -28,4 +28,6 @@
     <string name="nav_history">History</string>
     <string name="nav_profile">Profile</string>
     <string name="search_address_city_location">Search address, city, location</string>
+    <string name="categories">Categories</string>
+    <string name="see_more">See More</string>
 </resources>
