@@ -11,6 +11,8 @@ import com.example.renteasyandroid.databinding.FragmentHomeBinding
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
+    private var adapter: CategoriesAdapter? = null
+
     override fun layout(): Int = R.layout.fragment_home
     override fun initViewModel() {
     }
