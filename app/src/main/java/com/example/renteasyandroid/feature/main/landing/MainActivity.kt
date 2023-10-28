@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityMainBinding
+import com.example.renteasyandroid.feature.main.landing.favorites.FavouritesFragment
 import com.example.renteasyandroid.feature.main.landing.home.HomeFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -36,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
 
                 R.id.action_favourite -> {
-                    val fragment = HomeFragment.getInstance()
+                    val fragment = FavouritesFragment.getInstance()
                     addFragment(fragment)
                     return@setOnItemSelectedListener true
                 }

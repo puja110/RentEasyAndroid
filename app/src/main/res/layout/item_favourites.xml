@@ -8,7 +8,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_recently_updated"
+        android:id="@+id/cv_favourites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_12"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_recently_updated"
+                android:id="@+id/iv_favourites"
                 android:layout_width="140dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
                 android:textColor="@color/black_444444"
                 android:textSize="@dimen/text_size_16"
                 app:layout_constraintEnd_toStartOf="@+id/tv_status"
-                app:layout_constraintStart_toEndOf="@+id/iv_recently_updated"
+                app:layout_constraintStart_toEndOf="@+id/iv_favourites"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -112,18 +112,6 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_price"
                 tools:text="/ month" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_favourite"
-                android:layout_width="@dimen/spacing_20"
-                android:layout_height="@dimen/spacing_20"
-                android:layout_marginBottom="@dimen/spacing_16"
-                android:layout_marginEnd="@dimen/spacing_16"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_per"
-                app:layout_constraintTop_toTopOf="@+id/tv_per"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias="0.058"
-                app:srcCompat="@drawable/ic_heart" />
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
@@ -139,6 +127,17 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_title"
                 tools:text="Available" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_favourite"
+                android:layout_width="@dimen/spacing_20"
+                android:layout_height="@dimen/spacing_20"
+                android:layout_marginBottom="@dimen/spacing_16"
+                android:layout_marginEnd="@dimen/spacing_16"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_per"
+                app:layout_constraintTop_toTopOf="@+id/tv_per"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.058"
+                app:srcCompat="@drawable/ic_heart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

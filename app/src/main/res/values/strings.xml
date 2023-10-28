@@ -31,4 +31,6 @@
     <string name="categories">Categories</string>
     <string name="see_more">See More</string>
     <string name="recently_updated">Recently Updated</string>
+    <string name="rent">Rent</string>
+    <string name="easy">Easy</string>
 </resources>
