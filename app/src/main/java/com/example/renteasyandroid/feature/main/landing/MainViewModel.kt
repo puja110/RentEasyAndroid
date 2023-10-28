@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.renteasyandroid.feature.main.data.MainRepositoryImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
+import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.utils.Response
 import kotlinx.coroutines.cancel
@@ -25,6 +26,10 @@ class MainViewModel : ViewModel(),
     private val recentUseCase = MutableLiveData<Response<List<RecentlyUpdatedResponse>>>()
     val recentResponse: LiveData<Response<List<RecentlyUpdatedResponse>>> =
         recentUseCase
+
+    private val favouriteUseCase = MutableLiveData<Response<List<FavouritesResponse>>>()
+    val favouriteResponse: LiveData<Response<List<FavouritesResponse>>> =
+        favouriteUseCase
 
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
@@ -55,6 +60,20 @@ class MainViewModel : ViewModel(),
             } catch (error: Exception) {
                 error.printStackTrace()
                 recentUseCase.value = Response.error(error)
+            }
+        }
+    }
+
+    fun getFavouritesResponse() {
+        viewModelScope.launch {
+            favouriteUseCase.value = Response.loading()
+            try {
+                favouriteUseCase.value = Response.complete(
+                    repository.getFavouritesResponse()
+                )
+            } catch (error: Exception) {
+                error.printStackTrace()
+                favouriteUseCase.value = Response.error(error)
             }
         }
     }
