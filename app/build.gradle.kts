@@ -54,9 +54,16 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.databinding:databinding-runtime:8.1.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("com.github.Spikeysanju:MotionToast:1.4")
+    implementation("com.github.Drjacky:ImagePicker:2.3.22")
+
 }

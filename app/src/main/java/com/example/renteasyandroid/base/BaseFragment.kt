@@ -13,9 +13,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     abstract fun layout(): Int
 
     lateinit var binding: T
-
-    abstract fun initViewModel()
-
     abstract fun initObservers()
 
     override fun onCreateView(
@@ -29,7 +26,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
         initObservers()
     }
 }

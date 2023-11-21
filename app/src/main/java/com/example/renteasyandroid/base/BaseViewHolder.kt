@@ -4,11 +4,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.renteasyandroid.BR
 
-open class BaseViewHolder(open val binding: ViewDataBinding) :
+abstract class BaseViewHolder<in T>(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    open fun bind(item: Any) {
-        binding.setVariable(BR._all, item)
+    open fun bindView(obj: T) {
+        binding.setVariable(BR._all, obj)
         binding.executePendingBindings()
     }
 }

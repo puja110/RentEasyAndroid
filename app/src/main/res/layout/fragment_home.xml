@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
+
+                <include
+                    android:id="@+id/include_search"
+                    layout="@layout/snippet_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="Welcome to RentEasy"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_24"
+                    app:layout_constraintStart_toStartOf="@+id/include_search"
+                    app:layout_constraintTop_toBottomOf="@+id/include_search" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_categories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/categories"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_categories_see_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sansf_regular"
+                    android:padding="@dimen/spacing_4"
+                    android:text="@string/see_more"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_categories"
+                    app:layout_constraintEnd_toEndOf="@+id/include_search"
+                    app:layout_constraintStart_toEndOf="@+id/tv_categories"
+                    app:layout_constraintTop_toTopOf="@+id/tv_categories" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_categories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    app:layout_constraintEnd_toEndOf="@id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@id/tv_categories"
+                    app:layout_constraintTop_toBottomOf="@id/tv_categories"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_categories" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recently_updated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/recently_updated"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_categories" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recently_updated_see_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sansf_regular"
+                    android:padding="@dimen/spacing_4"
+                    android:text="@string/see_more"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_12"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_recently_updated"
+                    app:layout_constraintEnd_toEndOf="@+id/include_search"
+                    app:layout_constraintStart_toEndOf="@+id/tv_recently_updated"
+                    app:layout_constraintTop_toTopOf="@+id/tv_recently_updated" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recently_updated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/tv_categories_see_more"
+                    app:layout_constraintStart_toStartOf="@id/tv_recently_updated"
+                    app:layout_constraintTop_toBottomOf="@id/tv_recently_updated"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_recently_updated" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
