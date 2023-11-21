@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_8"
+        android:paddingBottom="@dimen/spacing_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_home_facilities"
+            android:layout_width="@dimen/spacing_24"
+            android:layout_height="@dimen/spacing_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/grey_808080"
+            tools:srcCompat="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/tv_home_facilities"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_8"
+            android:fontFamily="@font/sansf_regular"
+            android:gravity="center_vertical"
+            android:text="Heating"
+            android:textColor="@color/grey_808080"
+            android:textSize="@dimen/text_size_16"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_home_facilities"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_home_facilities"
+            app:layout_constraintTop_toTopOf="@+id/iv_home_facilities" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

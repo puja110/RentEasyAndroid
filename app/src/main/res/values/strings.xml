@@ -31,6 +31,23 @@
     <string name="categories">Categories</string>
     <string name="see_more">See More</string>
     <string name="recently_updated">Recently Updated</string>
+    <string name="your_new_post">Your new Post</string>
     <string name="rent">Rent</string>
     <string name="easy">Easy</string>
+    <string name="home_facilities">Home Facilities</string>
+    <string name="near_public_facilities">Near Public Facilities</string>
+    <string name="description">Description</string>
+    <string name="description_message">This is a beautiful and cozy home which would be perfect for those who are searching for small yet environment friendly place.\n\nThis home is  equipped with Washing Machine, Electric Stove, Microwave, Refrigerator, Cutlery.</string>
+    <string name="proceed_for_booking">Proceed for Booking</string>
+    <string name="title">Title</string>
+    <string name="type">Type</string>
+    <string name="price">Price</string>
+    <string name="negotiable">Negotiable</string>
+    <string name="non_negotiable">Non-negotiable</string>
+    <string name="address">Address</string>
+    <string name="submit">Submit</string>
+    <string name="i_agree_to_the_terms_and_conditions">I agree to the terms and conditions</string>
+    <string name="upload_property_images">Upload Property Images</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

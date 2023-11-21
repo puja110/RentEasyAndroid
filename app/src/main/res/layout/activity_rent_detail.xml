@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="@dimen/spacing_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black_444444"
+            app:srcCompat="@drawable/iv_back" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_detail_image"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_margin="@dimen/spacing_16"
+                    android:clipToPadding="false"
+                    app:cardCornerRadius="@dimen/spacing_16"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_favourite"
+                    android:layout_width="@dimen/spacing_28"
+                    android:layout_height="@dimen/spacing_28"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_location"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_location"
+                    app:layout_constraintStart_toStartOf="@+id/cv_detail_image"
+                    app:layout_constraintTop_toTopOf="@+id/iv_location"
+                    app:srcCompat="@drawable/ic_heart"
+                    app:tint="@color/colorAccent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="@dimen/spacing_32"
+                    android:layout_height="@dimen/spacing_32"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_share"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_share"
+                    app:layout_constraintStart_toEndOf="@+id/iv_favourite"
+                    app:layout_constraintTop_toTopOf="@+id/iv_share"
+                    app:srcCompat="@drawable/ic_location"
+                    app:tint="@color/colorMain" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_share"
+                    android:layout_width="@dimen/spacing_28"
+                    android:layout_height="@dimen/spacing_28"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    app:layout_constraintEnd_toEndOf="@+id/cv_detail_image"
+                    app:layout_constraintStart_toEndOf="@+id/iv_location"
+                    app:layout_constraintTop_toBottomOf="@id/cv_detail_image"
+                    app:srcCompat="@drawable/ic_share"
+                    app:tint="@color/colorAccent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="Small nature Friendly house"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_24"
+                    app:layout_constraintEnd_toEndOf="@+id/cv_detail_image"
+                    app:layout_constraintStart_toStartOf="@+id/cv_detail_image"
+                    app:layout_constraintTop_toBottomOf="@id/iv_location" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:rating="4"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_8"
+                    android:drawablePadding="@dimen/spacing_4"
+                    android:fontFamily="@font/sansf_regular"
+                    android:gravity="center_vertical"
+                    android:text="Owen street, Barrie"
+                    android:textColor="@color/grey_808080"
+                    app:drawableStartCompat="@drawable/ic_location"
+                    app:drawableTint="@color/grey_808080"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_room_number"
+                    app:layout_constraintStart_toStartOf="@+id/ratingBar"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+                <TextView
+                    android:id="@+id/tv_room_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/spacing_4"
+                    android:fontFamily="@font/sansf_regular"
+                    android:gravity="center_vertical"
+                    android:text="2 Rooms"
+                    android:textColor="@color/grey_808080"
+                    app:drawableStartCompat="@drawable/ic_bed"
+                    app:drawableTint="@color/grey_808080"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_location"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_location"
+                    app:layout_constraintTop_toTopOf="@+id/tv_location" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_1"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/tv_room_number"
+                    app:layout_constraintStart_toStartOf="@+id/tv_location"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_user"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clipToPadding="false"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="@dimen/spacing_20"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayoutCompat"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayoutCompat"
+                    app:layout_constraintStart_toStartOf="@+id/divider1"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayoutCompat">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/spacing_4"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_person" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearLayoutCompat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginEnd="@dimen/spacing_16"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toStartOf="@+id/cv_phone"
+                    app:layout_constraintStart_toEndOf="@+id/cv_user"
+                    app:layout_constraintTop_toBottomOf="@+id/divider1">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sansf_bold"
+                        android:gravity="center_vertical"
+                        android:text="John Doe"
+                        android:textColor="@color/black_444444"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/spacing_4"
+                        android:fontFamily="@font/sansf_regular"
+                        android:gravity="center_vertical"
+                        android:text="Property Owner"
+                        android:textColor="@color/grey_808080"
+                        android:textSize="@dimen/text_size_14" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_phone"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clipToPadding="false"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="@dimen/spacing_4"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintBottom_toBottomOf="@id/linearLayoutCompat"
+                    app:layout_constraintEnd_toEndOf="@+id/divider1"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayoutCompat"
+                    app:layout_constraintTop_toTopOf="@id/linearLayoutCompat">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/spacing_8"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_phone" />
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_1"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/tv_room_number"
+                    app:layout_constraintStart_toStartOf="@+id/tv_location"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
+
+                <TextView
+                    android:id="@+id/tv_title_facilities"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/home_facilities"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toEndOf="@id/divider2"
+                    app:layout_constraintStart_toStartOf="@id/divider2"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_home_facilities"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title_facilities"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title_facilities"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_facilities"
+                    app:spanCount="2"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_home_facilities" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_1"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/rv_home_facilities"
+                    app:layout_constraintStart_toStartOf="@+id/rv_home_facilities"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_home_facilities" />
+
+                <TextView
+                    android:id="@+id/tv_nearest_facilities"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/near_public_facilities"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toEndOf="@id/divider3"
+                    app:layout_constraintStart_toStartOf="@id/divider3"
+                    app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_nearest_facilities"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_12"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_nearest_facilities"
+                    app:layout_constraintStart_toStartOf="@+id/tv_nearest_facilities"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nearest_facilities"
+                    app:spanCount="2"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_near_public_facilities" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_1"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/rv_nearest_facilities"
+                    app:layout_constraintStart_toStartOf="@+id/rv_nearest_facilities"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_nearest_facilities" />
+
+                <TextView
+                    android:id="@+id/tv_descripton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/description"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_16"
+                    app:layout_constraintEnd_toEndOf="@id/rv_nearest_facilities"
+                    app:layout_constraintStart_toStartOf="@id/rv_nearest_facilities"
+                    app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+                <TextView
+                    android:id="@+id/tv_description_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/description_message"
+                    android:textColor="@color/grey_808080"
+                    android:textSize="@dimen/text_size_14"
+                    app:layout_constraintEnd_toEndOf="@id/rv_nearest_facilities"
+                    app:layout_constraintStart_toStartOf="@id/rv_nearest_facilities"
+                    app:layout_constraintTop_toBottomOf="@id/tv_descripton" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_proceed_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_16"
+                    android:clipToPadding="false"
+                    app:cardBackgroundColor="@color/colorMain"
+                    app:cardCornerRadius="@dimen/spacing_32"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_message">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/ll_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="@dimen/spacing_14"
+                        android:paddingHorizontal="@dimen/spacing_18">
+
+                        <TextView
+                            android:id="@+id/tv_proceed_for_payment"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.5"
+                            android:fontFamily="@font/sansf_bold"
+                            android:gravity="center_vertical"
+                            android:text="@string/proceed_for_booking"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/text_size_16"
+                            app:layout_constraintEnd_toEndOf="@id/rv_nearest_facilities"
+                            app:layout_constraintStart_toStartOf="@id/rv_nearest_facilities"
+                            app:layout_constraintTop_toBottomOf="@id/tv_descripton" />
+
+                        <TextView
+                            android:id="@+id/tv_price"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/sansf_bold"
+                            android:gravity='right'
+                            android:text="2400$/month"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/text_size_16"
+                            app:layout_constraintEnd_toEndOf="@id/rv_nearest_facilities"
+                            app:layout_constraintStart_toStartOf="@id/rv_nearest_facilities"
+                            app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_1"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@id/cv_proceed_payment"
+                    app:layout_constraintStart_toStartOf="@+id/cv_proceed_payment"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_proceed_payment" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
