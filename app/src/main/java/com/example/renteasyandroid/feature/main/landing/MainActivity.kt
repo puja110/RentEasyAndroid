@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityMainBinding
+import com.example.renteasyandroid.feature.main.landing.add.PostRentFragment
 import com.example.renteasyandroid.feature.main.landing.favorites.FavouritesFragment
 import com.example.renteasyandroid.feature.main.landing.home.HomeFragment
+import com.example.renteasyandroid.feature.main.landing.profile.ProfileFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -43,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
 
                 R.id.action_add -> {
-                    val fragment = HomeFragment.getInstance()
+                    val fragment = PostRentFragment.getInstance()
                     addFragment(fragment)
                     return@setOnItemSelectedListener true
                 }
@@ -55,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
 
                 R.id.action_profile -> {
-                    val fragment = HomeFragment.getInstance()
+                    val fragment = ProfileFragment.getInstance()
                     addFragment(fragment)
                     return@setOnItemSelectedListener true
                 }
@@ -84,13 +86,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
-        if (binding.bottomNavigationView.selectedItemId == R.id.action_home) {
+        /*if (binding.bottomNavigationView.selectedItemId == R.id.action_home) {
             onBackPressedDispatcher.onBackPressed()
             finish()
         } else {
             binding.bottomNavigationView.selectedItemId = R.id.action_home
-        }
-
+        }*/
         return super.getOnBackInvokedDispatcher()
     }
 }

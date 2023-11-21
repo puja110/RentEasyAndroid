@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/toolbar_secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_16"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/your_new_post"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/title"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_title"
+                        style="@style/edit_text_style_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="@dimen/spacing_8"
+                        android:inputType="textCapSentences"
+                        android:nextFocusDown="@+id/btn_sign_in" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/type"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/til_title"
+                    app:layout_constraintStart_toStartOf="@+id/til_title"
+                    app:layout_constraintTop_toBottomOf="@+id/til_title" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_type"
+                    app:layout_constraintStart_toStartOf="@+id/tv_type"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_type">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_type"
+                        style="@style/edit_text_style_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="@dimen/spacing_8"
+                        android:inputType="textCapSentences"
+                        android:nextFocusDown="@+id/btn_sign_in" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/price"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/til_type"
+                    app:layout_constraintStart_toStartOf="@+id/til_type"
+                    app:layout_constraintTop_toBottomOf="@+id/til_type" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_price"
+                    app:layout_constraintStart_toStartOf="@+id/tv_price"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_price">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_price"
+                        style="@style/edit_text_style_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="@dimen/spacing_8"
+                        android:hint="$200"
+                        android:inputType="number"
+                        android:nextFocusDown="@+id/btn_sign_in" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/til_price"
+                    app:layout_constraintStart_toStartOf="@+id/til_price"
+                    app:layout_constraintTop_toBottomOf="@+id/til_price">
+
+                    <RadioButton
+                        android:id="@+id/rb_negotiable"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:fontFamily="@font/sansf_regular"
+                        android:text="@string/negotiable"
+                        android:textAlignment="textStart"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <RadioButton
+                        android:id="@+id/rb_non_negotiable"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:fontFamily="@font/sansf_regular"
+                        android:text="@string/non_negotiable"
+                        android:textAlignment="textStart"
+                        android:textSize="@dimen/text_size_12" />
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/address"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_address"
+                    app:layout_constraintStart_toStartOf="@+id/tv_address"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_address">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_address"
+                        style="@style/edit_text_style_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="@dimen/spacing_8"
+                        android:inputType="textCapSentences"
+                        android:nextFocusDown="@+id/btn_sign_in" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/description"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/til_address"
+                    app:layout_constraintStart_toStartOf="@+id/til_address"
+                    app:layout_constraintTop_toBottomOf="@+id/til_address" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    app:hintEnabled="false"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_description"
+                    app:layout_constraintStart_toStartOf="@+id/tv_description"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_description"
+                        style="@style/edit_text_style_blue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/spacing_8"
+                        android:gravity="top|start"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:lines="8"
+                        android:maxLines="10"
+                        android:minLines="6"
+                        android:nextFocusDown="@+id/btn_sign_in" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_property_pictures"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:fontFamily="@font/sansf_bold"
+                    android:text="@string/upload_property_images"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_444444"
+                    android:textSize="@dimen/text_size_12"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/til_description"
+                    app:layout_constraintStart_toStartOf="@+id/til_description"
+                    app:layout_constraintTop_toBottomOf="@+id/til_description" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_add_property_image"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="@dimen/spacing_8"
+                    android:background="@drawable/bg_image_post"
+                    android:padding="@dimen/spacing_12"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/tv_property_pictures"
+                    app:layout_constraintTop_toBottomOf="@id/tv_property_pictures"
+                    app:srcCompat="@drawable/ic_plain_add"
+                    app:tint="@color/colorMain" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_property_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_add_property_image"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_property_pictures"
+                    app:layout_constraintStart_toEndOf="@+id/iv_add_property_image"
+                    app:layout_constraintTop_toTopOf="@id/iv_add_property_image"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_property_image" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:checked="true"
+                    android:fontFamily="@font/sansf_regular"
+                    android:text="@string/i_agree_to_the_terms_and_conditions"
+                    android:textColor="@color/grey_808080"
+                    android:textSize="@dimen/text_size_14"
+                    app:layout_constraintEnd_toEndOf="@id/tv_property_pictures"
+                    app:layout_constraintStart_toStartOf="@id/til_description"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_add_property_image" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_login"
+                    style="@style/button_style_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_16"
+                    android:layout_marginBottom="@dimen/spacing_24"
+                    android:text="@string/submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/checkBox"
+                    app:layout_constraintStart_toStartOf="@id/checkBox"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

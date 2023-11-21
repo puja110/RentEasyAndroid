@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.renteasyandroid.feature.main.data.MainRepositoryImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
+import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
+import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.utils.Response
 import kotlinx.coroutines.cancel
@@ -30,6 +32,15 @@ class MainViewModel : ViewModel(),
     private val favouriteUseCase = MutableLiveData<Response<List<FavouritesResponse>>>()
     val favouriteResponse: LiveData<Response<List<FavouritesResponse>>> =
         favouriteUseCase
+
+    private val homeFacilitiesUseCase = MutableLiveData<Response<List<HomeFacilitiesResponse>>>()
+    val homeFacilitiesResponse: LiveData<Response<List<HomeFacilitiesResponse>>> =
+        homeFacilitiesUseCase
+
+    private val nearPublicFacilitiesUseCase =
+        MutableLiveData<Response<List<NearPublicFacilitiesResponse>>>()
+    val nearPublicFacilitiesResponse: LiveData<Response<List<NearPublicFacilitiesResponse>>> =
+        nearPublicFacilitiesUseCase
 
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
@@ -74,6 +85,34 @@ class MainViewModel : ViewModel(),
             } catch (error: Exception) {
                 error.printStackTrace()
                 favouriteUseCase.value = Response.error(error)
+            }
+        }
+    }
+
+    fun getHomeFacilitiesResponse() {
+        viewModelScope.launch {
+            homeFacilitiesUseCase.value = Response.loading()
+            try {
+                homeFacilitiesUseCase.value = Response.complete(
+                    repository.getHomeFacilitiesResponse()
+                )
+            } catch (error: Exception) {
+                error.printStackTrace()
+                homeFacilitiesUseCase.value = Response.error(error)
+            }
+        }
+    }
+
+    fun getNearPublicFacilitiesResponse() {
+        viewModelScope.launch {
+            nearPublicFacilitiesUseCase.value = Response.loading()
+            try {
+                nearPublicFacilitiesUseCase.value = Response.complete(
+                    repository.getNearPublicFacilitiesResponse()
+                )
+            } catch (error: Exception) {
+                error.printStackTrace()
+                nearPublicFacilitiesUseCase.value = Response.error(error)
             }
         }
     }

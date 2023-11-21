@@ -3,6 +3,8 @@ package com.example.renteasyandroid.feature.main.data.remote
 import com.example.renteasyandroid.feature.main.data.MainRepository
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
+import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
+import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.remote.ApiService
 
@@ -180,4 +182,69 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
 
         return items
     }
+
+    override suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse> {
+        val items = mutableListOf<HomeFacilitiesResponse>()
+        items.add(
+            HomeFacilitiesResponse(
+                id = 1,
+                title = "Heating",
+            )
+        )
+        items.add(
+            HomeFacilitiesResponse(
+                id = 2,
+                title = "Laundry",
+            )
+        )
+        items.add(
+            HomeFacilitiesResponse(
+                id = 3,
+                title = "Free Parking",
+            )
+        )
+        items.add(
+            HomeFacilitiesResponse(
+                id = 4,
+                title = "Free WiFi",
+            )
+        )
+        return items
+    }
+
+    override suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse> {
+        val items = mutableListOf<NearPublicFacilitiesResponse>()
+        items.add(
+            NearPublicFacilitiesResponse(
+                id = 1,
+                title = "Minimarket",
+                distance = "200m"
+            )
+        )
+        items.add(
+            NearPublicFacilitiesResponse(
+                id = 2,
+                title = "Hospital",
+                distance = "130m"
+
+            )
+        )
+        items.add(
+            NearPublicFacilitiesResponse(
+                id = 3,
+                title = "Public canteen",
+                distance = "400m"
+            )
+        )
+        items.add(
+            NearPublicFacilitiesResponse(
+                id = 4,
+                title = "Train Station",
+                distance = "500m"
+
+            )
+        )
+        return items
+    }
+
 }

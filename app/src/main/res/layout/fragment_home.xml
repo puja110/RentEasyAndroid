@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_16"
                     android:fontFamily="@font/sansf_bold"
-                    android:text="Welcome Puja,"
+                    android:text="Welcome to RentEasy"
                     android:textColor="@color/black_444444"
                     android:textSize="@dimen/text_size_24"
                     app:layout_constraintStart_toStartOf="@+id/include_search"
