@@ -126,6 +126,19 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_remember"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_16"
+                android:fontFamily="@font/sansf_regular"
+                android:text="@string/remember_login"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_forgot_password"
+                app:layout_constraintEnd_toStartOf="@+id/tv_forgot_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_forgot_password" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_forgot_password"
                 android:layout_width="0dp"
