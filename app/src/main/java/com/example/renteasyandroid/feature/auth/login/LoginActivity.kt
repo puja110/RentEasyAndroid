@@ -40,6 +40,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        preference = SharedPreferenceManager(this)
         if (preference.email?.isNotEmpty() == true && preference.password?.isNotEmpty() == true) {
             binding.cbRemember.isChecked = true
             binding.etEmail.setText(preference.email)
