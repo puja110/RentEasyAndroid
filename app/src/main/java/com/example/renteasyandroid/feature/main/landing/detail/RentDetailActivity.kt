@@ -2,6 +2,7 @@ package com.example.renteasyandroid.feature.main.landing.detail
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
@@ -38,6 +39,16 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>() {
         viewModel.getHomeFacilitiesResponse()
         viewModel.getNearPublicFacilitiesResponse()
 
+        binding.ivShare.setOnClickListener {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            val uriToImage = Uri.parse("https://fastly.picsum.photos/id/19/2500/1667.jpg?hmac=7epGozH4QjToGaBf_xb2HbFTXoV5o8n_cYzB7I4lt6g")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Convenient, Free & Easy To Use List of Best Accommodation finding Android Application. This is a beautiful and cozy home which would be perfect for those who are searching for small yet environment friendly place.\\n\\nThis home is  equipped with Washing Machine, Electric Stove, Microwave, Refrigerator, Cutlery.")
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage)
+            shareIntent.type = "*/*"
+            startActivity(Intent.createChooser(shareIntent, "Share"))
+
+        }
     }
 
     override fun initObservers() {
