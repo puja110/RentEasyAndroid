@@ -19,7 +19,9 @@ import www.sanju.motiontoast.MotionToastStyle
 
 class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModel.provideFactory(requireContext())
+    }
     private var mCameraUri = mutableListOf<Uri>()
     private var adapter: PropertyImageAdapter? = null
 
@@ -29,7 +31,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                 val uri = it.data?.data!!
                 mCameraUri.add(uri)
                 adapter?.updateData(mCameraUri)
-                adapter?.notifyItemChanged(mCameraUri.size-1)
+                adapter?.notifyItemChanged(mCameraUri.size - 1)
             } else {
                 parseError(it)
             }

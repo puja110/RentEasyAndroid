@@ -1,11 +1,16 @@
 package com.example.renteasyandroid.feature.main.landing
 
+import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.renteasyandroid.feature.main.data.MainRepository
 import com.example.renteasyandroid.feature.main.data.MainRepositoryImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
@@ -16,10 +21,22 @@ import com.example.renteasyandroid.utils.Response
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel(),
+class MainViewModel(
+    private val repository: MainRepository
+) : ViewModel(),
     DefaultLifecycleObserver {
-
-    private val repository by lazy { MainRepositoryImpl.getInstance() }
+    companion object {
+        fun provideFactory(
+            context: Context,
+        ): ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val myRepository by lazy { MainRepositoryImpl.getInstance(context) }
+                MainViewModel(
+                    repository = myRepository,
+                )
+            }
+        }
+    }
 
     private val categoryUseCase = MutableLiveData<Response<List<CategoryResponse>>>()
     val categoryResponse: LiveData<Response<List<CategoryResponse>>> =
@@ -65,6 +82,7 @@ class MainViewModel : ViewModel(),
         viewModelScope.launch {
             recentUseCase.value = Response.loading()
             try {
+                repository.saveRecentlyUpdatedResponse()
                 recentUseCase.value = Response.complete(
                     repository.getRecentlyUpdatedResponse()
                 )

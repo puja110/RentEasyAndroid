@@ -10,4 +10,7 @@ data class RecentlyUpdatedResponse(
     var price: String,
     var price_type: String,
     var status: String,
+    var rating: Float,
+    var owner: String,
+    var description: String,
 )
