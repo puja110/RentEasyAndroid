@@ -11,13 +11,17 @@ import com.example.renteasyandroid.databinding.ActivityLoginBinding
 import com.example.renteasyandroid.feature.auth.forgotpassword.ForgotPasswordActivity
 import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 import com.example.renteasyandroid.feature.main.landing.MainActivity
+import com.example.renteasyandroid.utils.ProgressDialog
 import com.example.renteasyandroid.utils.SharedPreferenceManager
+import com.example.renteasyandroid.utils.Status
 import com.example.renteasyandroid.utils.showToast
 import www.sanju.motiontoast.MotionToastStyle
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModel.provideFactory(this)
+    }
 
     private var email = ""
     private var password = ""
@@ -56,7 +60,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.btnLogin.setOnClickListener {
             if (isValid()) {
-                MainActivity.start(this)
+                viewModel.authenticateUser(email, password)
             }
         }
         binding.btnCreateAccount.setOnClickListener {
@@ -85,5 +89,51 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun initObservers() {
+        observeLoginResponse()
+    }
+
+    private fun observeLoginResponse() {
+        viewModel.loginResponse.observe(this) { response ->
+            when (response.status) {
+                Status.LOADING -> {
+                    showProgress()
+                }
+
+                Status.COMPLETE -> {
+                    hideProgress()
+                    if (response.data.toString() == "success") {
+                        showToast("Success", "Login Successful!", MotionToastStyle.SUCCESS)
+                        MainActivity.start(this)
+                    } else {
+                        showToast(
+                            "Error",
+                            response.data.toString(),
+                            MotionToastStyle.ERROR
+                        )
+                    }
+
+                }
+
+                Status.ERROR -> {
+                    hideProgress()
+                    showToast(
+                        "Error",
+                        response.error.toString(),
+                        MotionToastStyle.ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    private fun showProgress() {
+        dialog = ProgressDialog.progressDialog(this)
+        dialog.show()
+    }
+
+    private fun hideProgress() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

@@ -33,7 +33,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             CategoryResponse(
                 id = 1,
                 title = "Houses",
-                image = "https://fastly.picsum.photos/id/20/3670/2462.jpg?hmac=CmQ0ln-k5ZqkdtLvVO23LjVAEabZQx2wOaT4pyeG10I",
+                image = "https://images.pexels.com/photos/164522/pexels-photo-164522.jpeg?auto=compress&cs=tinysrgb&w=800",
                 searchCount = "64"
             )
         )
@@ -41,7 +41,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             CategoryResponse(
                 id = 2,
                 title = "Condos",
-                image = "https://fastly.picsum.photos/id/19/2500/1667.jpg?hmac=7epGozH4QjToGaBf_xb2HbFTXoV5o8n_cYzB7I4lt6g",
+                image = "https://images.pexels.com/photos/53610/large-home-residential-house-architecture-53610.jpeg?auto=compress&cs=tinysrgb&w=1200",
                 searchCount = "34"
             )
         )
@@ -49,7 +49,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             CategoryResponse(
                 id = 3,
                 title = "Flat",
-                image = "https://fastly.picsum.photos/id/16/2500/1667.jpg?hmac=uAkZwYc5phCRNFTrV_prJ_0rP0EdwJaZ4ctje2bY7aE",
+                image = "https://images.pexels.com/photos/259593/pexels-photo-259593.jpeg?auto=compress&cs=tinysrgb&w=1200",
                 searchCount = "204"
             )
         )
@@ -57,7 +57,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             CategoryResponse(
                 id = 4,
                 title = "Apartment",
-                image = "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
+                image = "https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg?auto=compress&cs=tinysrgb&w=800",
                 searchCount = "292"
             )
         )
@@ -71,13 +71,16 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             RecentlyUpdatedResponse(
                 id = 1,
                 title = "Small nature friendly house",
-                image = "https://fastly.picsum.photos/id/28/4928/3264.jpg?hmac=GnYF-RnBUg44PFfU5pcw_Qs0ReOyStdnZ8MtQWJqTfA",
+                image = "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "2400",
                 currency_code = "$",
                 price_type = "month",
-                status = "Available"
+                status = "Available",
+                rating = 3.5F,
+                owner = "Olasile Oladipupo",
+                description = "Charming and spacious house available for rent! This inviting home features [number of bedrooms/bathrooms], a [mention any standout features like a modern kitchen, scenic backyard, etc.], and is conveniently located near [mention nearby amenities or landmarks]. Perfect for anyone seeking comfort, convenience, and a place to call home."
             )
         )
 
@@ -85,39 +88,65 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             RecentlyUpdatedResponse(
                 id = 2,
                 title = "Apartment with great sea view",
-                image = "https://fastly.picsum.photos/id/29/4000/2670.jpg?hmac=rCbRAl24FzrSzwlR5tL-Aqzyu5tX_PA95VJtnUXegGU",
+                image = "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "5260",
                 currency_code = "$",
                 price_type = "month",
-                status = "Booked"
+                status = "Booked",
+                rating = 3.5F,
+                owner = "Manushi Khadka",
+                description = "Welcome to your new rental home! This cozy [number of bedrooms/bathrooms] house boasts [highlight any unique features like hardwood floors, a fireplace, or a backyard oasis]. Nestled in a peaceful neighborhood close to [mention nearby attractions or conveniences], this property offers comfort and tranquility for your ideal living experience"
             )
         )
         items.add(
             RecentlyUpdatedResponse(
-                id = 2,
+                id = 3,
                 title = "Countryside home",
-                image = "https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4",
+                image = "https://images.pexels.com/photos/3990589/pexels-photo-3990589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "5260",
                 currency_code = "$",
                 price_type = "month",
-                status = "Booked"
+                status = "Booked",
+                rating = 3.5F,
+                owner = "Suyog Shrestha",
+                description = "Stunning rental opportunity! This [number of bedrooms/bathrooms] house showcases [highlight any exceptional features such as a spacious living area, updated appliances, or a scenic view]. Located in a prime location near [mention nearby amenities or transportation hubs], this home promises convenience and elegance, perfect for creating unforgettable memories."
             )
         )
         items.add(
             RecentlyUpdatedResponse(
-                id = 1,
+                id = 4,
                 title = "Small nature friendly house",
-                image = "https://fastly.picsum.photos/id/27/3264/1836.jpg?hmac=p3BVIgKKQpHhfGRRCbsi2MCAzw8mWBCayBsKxxtWO8g",
+                image = "https://images.pexels.com/photos/164558/pexels-photo-164558.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "2400",
                 currency_code = "$",
                 price_type = "month",
-                status = "Available"
+                status = "Available",
+                rating = 5.0f,
+                owner = "Puja Shrestha",
+                description = "Your perfect rental awaits! This [number of bedrooms/bathrooms] home exudes [mention any notable features such as modern design, ample natural light, or a landscaped garden]. Situated in a desirable neighborhood close to [highlight nearby attractions or facilities], this property offers comfort and style, making it an ideal place to call home."
+            )
+        )
+
+        items.add(
+            RecentlyUpdatedResponse(
+                id = 5,
+                title = "Beautiful House with a view",
+                image = "https://images.pexels.com/photos/209274/pexels-photo-209274.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                address = "Owen street, Barrie",
+                roomCount = "2",
+                price = "1900",
+                currency_code = "$",
+                price_type = "month",
+                status = "Booked",
+                rating = 5.0f,
+                owner = "Pramod Regmi",
+                description = "Your perfect rental awaits! This [number of bedrooms/bathrooms] home exudes [mention any notable features such as modern design, ample natural light, or a landscaped garden]. Situated in a desirable neighborhood close to [highlight nearby attractions or facilities], this property offers comfort and style, making it an ideal place to call home."
             )
         )
 
@@ -130,7 +159,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             FavouritesResponse(
                 id = 1,
                 title = "Small nature friendly house",
-                image = "https://fastly.picsum.photos/id/28/4928/3264.jpg?hmac=GnYF-RnBUg44PFfU5pcw_Qs0ReOyStdnZ8MtQWJqTfA",
+                image = "https://images.pexels.com/photos/277667/pexels-photo-277667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "2400",
@@ -144,7 +173,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             FavouritesResponse(
                 id = 2,
                 title = "Apartment with great sea view",
-                image = "https://fastly.picsum.photos/id/29/4000/2670.jpg?hmac=rCbRAl24FzrSzwlR5tL-Aqzyu5tX_PA95VJtnUXegGU",
+                image = "https://images.pexels.com/photos/7475561/pexels-photo-7475561.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "5260",
@@ -155,9 +184,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         )
         items.add(
             FavouritesResponse(
-                id = 2,
+                id = 3,
                 title = "Countryside home",
-                image = "https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4",
+                image = "https://images.pexels.com/photos/3935328/pexels-photo-3935328.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "5260",
@@ -168,9 +197,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         )
         items.add(
             FavouritesResponse(
-                id = 1,
+                id = 4,
                 title = "Small nature friendly house",
-                image = "https://fastly.picsum.photos/id/27/3264/1836.jpg?hmac=p3BVIgKKQpHhfGRRCbsi2MCAzw8mWBCayBsKxxtWO8g",
+                image = "https://images.pexels.com/photos/10553915/pexels-photo-10553915.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
                 address = "Owen street, Barrie",
                 roomCount = "2",
                 price = "2400",

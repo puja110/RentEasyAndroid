@@ -204,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawablePadding="@dimen/spacing_8"
-                    android:hint="example@gmail.com"
+                    android:hint="4374525892"
                     android:inputType="number"
                     android:nextFocusDown="@+id/btn_sign_in" />
 
