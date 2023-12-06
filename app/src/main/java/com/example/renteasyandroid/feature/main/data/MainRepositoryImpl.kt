@@ -1,5 +1,7 @@
 package com.example.renteasyandroid.feature.main.data
 
+import android.content.Context
+import com.example.renteasyandroid.database.entity.RecentlyUpdatedEntity
 import com.example.renteasyandroid.feature.main.data.local.MainLocalImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
@@ -20,16 +22,17 @@ class MainRepositoryImpl constructor(
         private var instance: MainRepository? = null
 
         @Synchronized
-        fun getInstance(): MainRepository {
+        fun getInstance(context: Context): MainRepository {
             if (instance != null) {
                 return instance!!
             }
 
-            val local = MainLocalImpl.getInstance()
+            val local = MainLocalImpl.getInstance(context)
             val remote = MainRemoteImpl.getInstance()
             return MainRepositoryImpl(local, remote).also { instance = it }
         }
     }
+
 
     override suspend fun getCategories(): List<CategoryResponse> {
         return withContext(Dispatchers.IO) {
@@ -37,9 +40,14 @@ class MainRepositoryImpl constructor(
         }
     }
 
+    override suspend fun saveRecentlyUpdatedResponse() {
+        val remoteResponse = remoteRepository.getRecentlyUpdatedResponse()
+        localRepository.insert(remoteResponse)
+    }
+
     override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
         return withContext(Dispatchers.IO) {
-            remoteRepository.getRecentlyUpdatedResponse()
+            localRepository.getRecentlyUpdatedData()
         }
     }
 
