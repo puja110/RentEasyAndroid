@@ -9,12 +9,17 @@ import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityRegisterBinding
 import com.example.renteasyandroid.feature.auth.forgotpassword.VerifyEmailActivity
+import com.example.renteasyandroid.utils.ProgressDialog
+import com.example.renteasyandroid.utils.Status
 import com.example.renteasyandroid.utils.showToast
 import www.sanju.motiontoast.MotionToastStyle
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
-    private val viewModel: RegisterViewModel by viewModels()
+    //initializing the viewmodel (RegisterViewModel)
+    private val viewModel: RegisterViewModel by viewModels {
+        RegisterViewModel.provideFactory(this)
+    }
 
     private var firstName = ""
     private var lastName = ""
@@ -31,6 +36,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
             activity.startActivity(intent)
         }
     }
+
     override fun layout() = R.layout.activity_register
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +46,13 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
         }
         binding.btnRegister.setOnClickListener {
             if (isValid()) {
-                VerifyEmailActivity.start(this)
+                viewModel.createUser(firstName, lastName, email, phone, password)
             }
         }
     }
 
+
+//    Validation done to check if the required fields are empty, email is in valid format
     private fun isValid(): Boolean {
         firstName = binding.etFirstName.text.toString()
         lastName = binding.etLastName.text.toString()
@@ -99,5 +107,49 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
     }
 
     override fun initObservers() {
+        observeRegisterResponse()
+    }
+
+
+    //    observes Status with Status types Loading, Complete and Error
+//    Loading : to show the loading
+//    Complete : Called when success
+//    Error : called when there is an error
+    private fun observeRegisterResponse() {
+        viewModel.registerResponse.observe(this) { response ->
+            when (response.status) {
+                Status.LOADING -> {
+                    showProgress()
+                }
+
+                Status.COMPLETE -> {
+                    hideProgress()
+                    showToast("Success", "User created Successfully!", MotionToastStyle.SUCCESS)
+                    onBackPressedDispatcher.onBackPressed()
+                }
+
+                Status.ERROR -> {
+                    hideProgress()
+                    showToast(
+                        "Error",
+                        "Error occurred while creating user!",
+                        MotionToastStyle.ERROR
+                    )
+                }
+            }
+        }
+    }
+
+    //function to show progress dialog
+    private fun showProgress() {
+        dialog = ProgressDialog.progressDialog(this)
+        dialog.show()
+    }
+
+    //function to hide or dismiss progress dialog if dialog is showing
+    private fun hideProgress() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

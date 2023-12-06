@@ -11,7 +11,9 @@ import com.example.renteasyandroid.feature.main.landing.MainViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModel.provideFactory(requireContext())
+    }
 
     override fun layout(): Int = R.layout.fragment_profile
 

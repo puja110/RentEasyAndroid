@@ -49,4 +49,5 @@
     <string name="i_agree_to_the_terms_and_conditions">I agree to the terms and conditions</string>
     <string name="upload_property_images">Upload Property Images</string>
     <string name="remember_login">Remember Login</string>
+    <string name="please_wait">Please wait</string>
 </resources>
