@@ -29,7 +29,7 @@ class SlashActivity : BaseActivity<ActivitySplashBinding>() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        //changes to login screen from splash screen after 2 seconds delay
+        //navigate to login screen after 2 seconds delay
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
