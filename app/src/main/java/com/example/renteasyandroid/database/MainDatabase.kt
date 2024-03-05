@@ -34,7 +34,7 @@ abstract class MainDatabase : RoomDatabase() {
 
         private fun createInstance(context: Context): MainDatabase {
             return Room
-                .databaseBuilder(context, MainDatabase::class.java, "database_name")
+                .databaseBuilder(context, MainDatabase::class.java, "rent_easy_db")
                 .fallbackToDestructiveMigration()
                 .build()
         }

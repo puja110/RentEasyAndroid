@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         //gets categories list through viewmodel
         viewModel.getCategoriesResponse()
 
-        //gets recentlyupdated list through viewmodel
+        //gets recently updated list from local database
         viewModel.getRecentlyUpdatedResponse()
     }
 
@@ -45,9 +45,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     //    observes Status with Status types Loading, Complete and Error
-//    Loading : to show the loading
-//    Complete : Called when success
-//    Error : called when there is an error
+    //    Loading : to show the loading
+    //    Complete : Called when success
+    //    Error : called when there is an error
     private fun observeGroceryResponse() {
         viewModel.categoryResponse.observe(this) { response ->
             when (response.status) {
@@ -76,9 +76,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     //    observes Status with Status types Loading, Complete and Error
-//    Loading : to show the loading
-//    Complete : Called when success
-//    Error : called when there is an error
+    //    Loading : to show the loading
+    //    Complete : Called when success
+    //    Error : called when there is an error
     private fun observeRecentlyUpdatedResponse() {
         viewModel.recentResponse.observe(this) { response ->
             when (response.status) {

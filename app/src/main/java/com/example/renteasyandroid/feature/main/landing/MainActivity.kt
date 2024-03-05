@@ -31,7 +31,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         setDefaultFragment(savedInstanceState)
 
-//      initializing bottom navigation view and its click listener
+        // initializing bottom navigation view and its click listener
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
