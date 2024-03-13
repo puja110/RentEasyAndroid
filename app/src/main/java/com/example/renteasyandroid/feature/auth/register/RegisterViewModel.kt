@@ -14,6 +14,7 @@ import com.example.renteasyandroid.database.entity.UserEntity
 import com.example.renteasyandroid.feature.auth.data.AuthRepository
 import com.example.renteasyandroid.feature.auth.data.AuthRepositoryImpl
 import com.example.renteasyandroid.utils.Response
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -46,7 +47,9 @@ class RegisterViewModel(
         super.onDestroy(owner)
     }
 
-    //function to create user and get the specific response after success
+    // Assuming you have already initialized Firebase in your app
+
+    // Function to create a user and handle registration
     fun createUser(
         firstName: String,
         lastName: String,
@@ -64,13 +67,13 @@ class RegisterViewModel(
                     phoneNumber = phoneNumber,
                     password = password
                 )
-                registerUseCase.value = Response.complete(
-                    repository.insert(entity)
-                )
+
+                repository.insert(entity)
             } catch (error: Exception) {
                 error.printStackTrace()
                 registerUseCase.value = Response.error(error)
             }
         }
     }
+
 }

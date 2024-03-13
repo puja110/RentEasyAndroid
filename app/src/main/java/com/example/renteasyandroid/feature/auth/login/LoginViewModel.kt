@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.renteasyandroid.feature.auth.data.AuthRepository
 import com.example.renteasyandroid.feature.auth.data.AuthRepositoryImpl
 import com.example.renteasyandroid.utils.Response
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -46,7 +47,7 @@ class LoginViewModel(
         super.onDestroy(owner)
     }
 
-    //function to authenticate registered user and get the specific response after success
+    // Function to authenticate a registered user
     fun authenticateUser(
         email: String,
         password: String
@@ -54,13 +55,14 @@ class LoginViewModel(
         viewModelScope.launch {
             loginUseCase.value = Response.loading()
             try {
-                loginUseCase.value = Response.complete(
-                    repository.authenticateUser(email, password)
-                )
+                repository.authenticateUser(email, password)
+
             } catch (error: Exception) {
+                // Handle other exceptions (e.g., database errors)
                 error.printStackTrace()
                 loginUseCase.value = Response.error(error)
             }
         }
     }
+
 }

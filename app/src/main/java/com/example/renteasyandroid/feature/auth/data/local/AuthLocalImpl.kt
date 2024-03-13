@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.renteasyandroid.database.DatabaseManager
 import com.example.renteasyandroid.database.entity.UserEntity
 import com.example.renteasyandroid.feature.auth.data.AuthRepository
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
 
 class AuthLocalImpl private constructor(
     private val databaseManager: DatabaseManager,
@@ -27,35 +29,57 @@ class AuthLocalImpl private constructor(
     override suspend fun insert(userEntity: UserEntity): Boolean {
         val allData = databaseManager.getInstance().getUsersDao().getUsers()
         if (allData.isNotEmpty()) {
-            allData.forEach {
-                return if (it == userEntity) {
-                    false
-                } else {
-                    databaseManager.getInstance().getUsersDao().insert(userEntity)
-                    true
+            for (existingUser in allData) {
+                if (existingUser == userEntity) {
+                    // User already exists, return false
+                    return false
                 }
             }
-        } else {
-            databaseManager.getInstance().getUsersDao().insert(userEntity)
-            return true
-
         }
-        return false
+
+        // Create a new user account with email and password
+        return try {
+           userEntity.email?.let {
+                userEntity.password?.let { it1 ->
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                        it, it1
+                    ).await()
+                }
+            }
+            // User registered successfully
+            // You can perform additional actions here (e.g., store additional user data)
+            databaseManager.getInstance().getUsersDao().insert(userEntity)
+            true
+        } catch (e: Exception) {
+            // Handle registration failure
+            val errorMessage = "Registration failed: ${e.message}"
+            // You can log the error or handle it as needed
+            false
+        }
     }
+
 
     override suspend fun authenticateUser(email: String, password: String): String {
         val allData = databaseManager.getInstance().getUsersDao().getUsers()
         if (allData.isNotEmpty()) {
-            allData.forEach {
-                return if (it.email == email && it.password == password) {
-                    "success"
-                } else {
-                    "Username and password did not match!"
+            for (userEntity in allData) {
+                if (userEntity.email == email && userEntity.password == password) {
+                    // User found in local data, now authenticate with Firebase
+                    return try {
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
+                        "success"
+                    } catch (e: Exception) {
+                        // Handle sign-in failure
+                        "Sign-in failed: ${e.message}"
+                    }
                 }
             }
+            // If the loop completes without finding a matching user
+            return "Username and password did not match!"
         } else {
             return "Looks like you have not registered yet!"
         }
-        return ""
     }
+
+
 }
