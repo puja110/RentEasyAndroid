@@ -70,16 +70,15 @@ class AuthLocalImpl private constructor(
                         "success"
                     } catch (e: Exception) {
                         // Handle sign-in failure
-                        "Sign-in failed: ${e.message}"
+                       "Sign-in failed: ${e.message}"
                     }
                 }
             }
             // If the loop completes without finding a matching user
             return "Username and password did not match!"
         } else {
-            return "Looks like you have not registered yet!"
+           return "Looks like you have not registered yet!"
         }
     }
-
 
 }
