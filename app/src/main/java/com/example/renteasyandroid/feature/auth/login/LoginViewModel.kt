@@ -55,7 +55,7 @@ class LoginViewModel(
         viewModelScope.launch {
             loginUseCase.value = Response.loading()
             try {
-                repository.authenticateUser(email, password)
+                loginUseCase.value = Response.complete(repository.authenticateUser(email, password))
 
             } catch (error: Exception) {
                 // Handle other exceptions (e.g., database errors)
