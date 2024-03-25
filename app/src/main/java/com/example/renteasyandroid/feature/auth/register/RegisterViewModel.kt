@@ -68,7 +68,7 @@ class RegisterViewModel(
                     password = password
                 )
 
-                repository.insert(entity)
+                registerUseCase.value = Response.complete(repository.insert(entity))
             } catch (error: Exception) {
                 error.printStackTrace()
                 registerUseCase.value = Response.error(error)
