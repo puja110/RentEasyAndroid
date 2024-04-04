@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "890325673922",
-    "project_id": "renteasy-95d52",
-    "storage_bucket": "renteasy-95d52.appspot.com"
+    "project_number": "959924736221",
+    "project_id": "renteasy-7a973",
+    "storage_bucket": "renteasy-7a973.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:890325673922:android:bfb0b612c8dcd2ad05985b",
+        "mobilesdk_app_id": "1:959924736221:android:49b9a43bfaaf4b3cd44b34",
         "android_client_info": {
-          "package_name": "com.example.renteasyandroid"
+          "package_name": "codesomps.renteasy"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAn6o1qtFBSC04glb3vZhRgc9fYrhHKLIo"
+          "current_key": "AIzaSyCQKnB7sBiWjr3_f3_y-MpXIlRj1PelacM"
         }
       ],
       "services": {
