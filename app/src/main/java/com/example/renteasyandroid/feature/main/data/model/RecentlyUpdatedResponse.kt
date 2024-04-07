@@ -1,16 +1,17 @@
 package com.example.renteasyandroid.feature.main.data.model
 
 data class RecentlyUpdatedResponse(
-    var id: Int,
-    var title: String,
-    var image: String,
-    var address: String,
-    var roomCount: String,
-    var currency_code: String,
-    var price: String,
-    var price_type: String,
-    var status: String,
-    var rating: Float,
-    var owner: String,
-    var description: String,
+    var id: String,
+    val description: String,
+    val imageUrls: List<String>,
+    val isBooked: Boolean,
+    val isNegotiable: Boolean,
+    val latitude: Double,
+    val longitude: Double,
+    val posterUserID: String,
+    val propertyAddress: String,
+    val propertyAmount: Int,
+    val propertyCategory: String,
+    val propertyName: String,
+    val propertySize: String
 )
