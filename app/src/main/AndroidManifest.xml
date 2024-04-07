@@ -28,6 +28,9 @@
             android:name=".feature.main.landing.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.auth.forgotpassword.VerifyEmailActivity"
             android:exported="false" />
         <activity
