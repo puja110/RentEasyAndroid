@@ -3,7 +3,6 @@ package com.example.renteasyandroid.feature.main.landing
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
 import androidx.fragment.app.Fragment
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity

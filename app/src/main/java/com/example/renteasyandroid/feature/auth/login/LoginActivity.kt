@@ -45,6 +45,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
 
         preference = SharedPreferenceManager(this)
+
         if (preference.email?.isNotEmpty() == true && preference.password?.isNotEmpty() == true) {
             binding.cbRemember.isChecked = true
             binding.etEmail.setText(preference.email)
@@ -60,6 +61,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.btnLogin.setOnClickListener {
             if (isValid()) {
+                if (binding.cbRemember.isChecked) {
+                    preference.email = email
+                    preference.password = password
+                }
                 viewModel.authenticateUser(email, password)
             }
         }

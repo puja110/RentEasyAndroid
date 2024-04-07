@@ -5,6 +5,7 @@ import com.example.renteasyandroid.database.DatabaseManager
 import com.example.renteasyandroid.database.entity.RecentlyUpdatedEntity
 import com.example.renteasyandroid.feature.main.data.MainRepository
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.search.data.local.SearchLocalImpl
 
 class MainLocalImpl private constructor(
     private val databaseManager: DatabaseManager,
