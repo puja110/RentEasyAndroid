@@ -10,6 +10,7 @@ import com.example.renteasyandroid.base.BaseFragment
 import com.example.renteasyandroid.databinding.FragmentHomeBinding
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
 import com.example.renteasyandroid.feature.main.landing.detail.RentDetailActivity
+import com.example.renteasyandroid.search.SearchActivity
 import com.example.renteasyandroid.utils.Status
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -37,6 +38,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         //gets recently updated list from local database
         viewModel.getRecentlyUpdatedResponse()
+
+        binding.includeSearch.constraintSearch.setOnClickListener {
+            SearchActivity.start(requireActivity())
+        }
     }
 
     override fun initObservers() {
