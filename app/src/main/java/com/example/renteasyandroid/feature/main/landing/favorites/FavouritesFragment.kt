@@ -12,7 +12,9 @@ import com.example.renteasyandroid.utils.Status
 
 class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModel.provideFactory(requireContext())
+    }
 
     private var adapter: FavouritesAdapter? = null
     override fun layout(): Int = R.layout.fragment_favourites
@@ -25,6 +27,8 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    //  gets favourites list through viewmodel
         viewModel.getFavouritesResponse()
     }
 
@@ -32,6 +36,10 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>() {
         observeFavoritesResponse()
     }
 
+    //    observes Status with Status types Loading, Complete and Error
+    //    Loading : to show the loading
+    //    Complete : Called when success
+    //    Error : called when there is an error
     private fun observeFavoritesResponse() {
         viewModel.favouriteResponse.observe(this) { response ->
             when (response.status) {
