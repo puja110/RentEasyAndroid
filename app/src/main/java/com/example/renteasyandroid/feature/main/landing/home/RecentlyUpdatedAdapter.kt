@@ -39,18 +39,20 @@ class RecentlyUpdatedAdapter(
         BaseViewHolder<RecentlyUpdatedResponse>(binding) {
         override fun bindView(obj: RecentlyUpdatedResponse) {
             super.bindView(obj)
-            binding.tvTitle.text = obj.title
+            binding.tvTitle.text = obj.propertyName
             Glide.with(binding.root.context)
-                .load(obj.image)
+                .load(obj.imageUrls[0])
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.ic_logo).into(binding.ivRecentlyUpdated)
 
-            binding.tvPer.text = "/ ${obj.price_type}"
-            binding.tvAddress.text = obj.address
-            binding.tvRoomCount.text = "${obj.roomCount} room"
-            binding.tvPrice.text = "${obj.currency_code}${obj.price}"
-            binding.tvStatus.text = obj.status
-            if (obj.status == "Available") {
+            binding.tvPer.text = "/ ${obj.propertyCategory}"
+            binding.tvAddress.text = obj.propertyAddress
+            binding.tvRoomCount.text = "${obj.propertySize} room"
+            binding.tvPrice.text = "CA ${obj.propertyAmount}"
+            binding.tvStatus.text =  if (obj.isBooked) "Booked" else "Available"
+
+            val status = if (obj.isBooked) "Booked" else "Available"
+            if (status == "Available") {
                 binding.tvStatus.setTextColor(
                     ContextCompat.getColor(
                         binding.tvStatus.context,
