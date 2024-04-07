@@ -3,7 +3,6 @@ package com.example.renteasyandroid.feature.main.landing
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
 import androidx.fragment.app.Fragment
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
@@ -24,12 +23,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             activity.finish()
         }
     }
+
     override fun layout() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaultFragment(savedInstanceState)
 
+        // initializing bottom navigation view and its click listener
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
@@ -50,12 +51,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.action_history -> {
-                    val fragment = HomeFragment.getInstance()
-                    addFragment(fragment)
-                    return@setOnItemSelectedListener true
-                }
-
                 R.id.action_profile -> {
                     val fragment = ProfileFragment.getInstance()
                     addFragment(fragment)
@@ -69,8 +64,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initObservers() {
     }
 
+
+    //  sets  Home Screen as the default fragment
     private fun setDefaultFragment(savedInstanceState: Bundle?) {
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.main_container,
@@ -79,19 +76,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    // custom function to add fragment to the activity container that needs to be shown
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment, fragment.javaClass.simpleName)
             .commit()
     }
 
-    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
-        /*if (binding.bottomNavigationView.selectedItemId == R.id.action_home) {
-            onBackPressedDispatcher.onBackPressed()
-            finish()
-        } else {
-            binding.bottomNavigationView.selectedItemId = R.id.action_home
-        }*/
-        return super.getOnBackInvokedDispatcher()
-    }
 }
