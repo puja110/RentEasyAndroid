@@ -97,12 +97,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             RentDetailActivity.start(
                                 requireActivity(),
                                 response.id,
-                                response.imageUrls?.get(0) ?: "",
-                                response.propertyName ?: "",
-                                response.propertyAddress ?: "",
-                                response.propertySize ?: "",
-                                response.description ?: "",
-                                response.posterUserID ?: "",
+                                response.imageUrls[0],
+                                response.propertyName,
+                                response.propertyAddress,
+                                response.propertySize,
+                                response.description,
+                                response.posterUserID,
                                 response.propertyAmount.toString(),
                                 "CA"
                             )
