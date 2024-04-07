@@ -97,14 +97,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             RentDetailActivity.start(
                                 requireActivity(),
                                 response.id,
-                                response.image,
-                                response.title,
-                                response.address,
-                                response.roomCount,
-                                response.description,
-                                response.owner,
-                                response.price,
-                                response.currency_code
+                                response.imageUrls?.get(0) ?: "",
+                                response.propertyName ?: "",
+                                response.propertyAddress ?: "",
+                                response.propertySize ?: "",
+                                response.description ?: "",
+                                response.posterUserID ?: "",
+                                response.propertyAmount.toString(),
+                                "CA"
                             )
                         }
                         binding.rvRecentlyUpdated.adapter = rAdapter

@@ -86,7 +86,8 @@ class MainViewModel(
         viewModelScope.launch {
             recentUseCase.value = Response.loading()
             try {
-                repository.saveRecentlyUpdatedResponse()
+//                repository.saveRecentlyUpdatedResponse()
+                repository.getRecentlyUpdatedResponse()
                 recentUseCase.value = Response.complete(
                     repository.getRecentlyUpdatedResponse()
                 )

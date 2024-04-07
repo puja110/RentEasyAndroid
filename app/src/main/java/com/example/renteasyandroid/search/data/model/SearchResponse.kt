@@ -1,7 +1,7 @@
 package com.example.renteasyandroid.search.data.model
 
 data class SearchResponse(
-    var id: Int,
+    var id: String,
     var title: String,
     var image: String,
     var address: String,

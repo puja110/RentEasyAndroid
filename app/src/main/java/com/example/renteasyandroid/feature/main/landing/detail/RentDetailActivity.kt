@@ -102,7 +102,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
     companion object {
         fun start(
             activity: Activity,
-            id: Int,
+            id: String,
             image: String,
             title: String,
             address: String,
