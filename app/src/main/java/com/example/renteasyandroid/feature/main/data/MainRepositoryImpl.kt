@@ -1,7 +1,6 @@
 package com.example.renteasyandroid.feature.main.data
 
 import android.content.Context
-import com.example.renteasyandroid.database.entity.RecentlyUpdatedEntity
 import com.example.renteasyandroid.feature.main.data.local.MainLocalImpl
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse

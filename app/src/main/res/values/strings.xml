@@ -50,4 +50,5 @@
     <string name="upload_property_images">Upload Property Images</string>
     <string name="remember_login">Remember Login</string>
     <string name="please_wait">Please wait</string>
+    <string name="search">Search</string>
 </resources>
