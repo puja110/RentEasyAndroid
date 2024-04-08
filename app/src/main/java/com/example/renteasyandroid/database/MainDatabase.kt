@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.renteasyandroid.database.dao.RecentlyUpdatedDao
+import com.example.renteasyandroid.database.dao.UserRatingDao
 import com.example.renteasyandroid.database.dao.UsersDao
 import com.example.renteasyandroid.database.entity.RecentlyUpdatedEntity
 import com.example.renteasyandroid.database.entity.UserEntity
+import com.example.renteasyandroid.database.entity.UserRatingEntity
 
 @Database(
     entities = [
         UserEntity::class,
-        RecentlyUpdatedEntity::class
+        RecentlyUpdatedEntity::class,
+        UserRatingEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -43,4 +46,5 @@ abstract class MainDatabase : RoomDatabase() {
     abstract fun getUsersDao(): UsersDao
     abstract fun getRecentlyUpdatedDao(): RecentlyUpdatedDao
 
+    abstract fun getUserRatingDao(): UserRatingDao
 }

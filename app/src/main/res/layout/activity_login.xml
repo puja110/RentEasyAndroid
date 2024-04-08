@@ -77,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawablePadding="@dimen/spacing_8"
+                    android:text="codesomps@gmail.com"
                     android:hint="example@gmail.com"
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@+id/btn_sign_in" />
@@ -120,6 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawablePadding="@dimen/spacing_8"
+                    android:text="admin666"
                     android:hint="xxxxxxxxxx"
                     android:inputType="textPassword"
                     android:nextFocusDown="@+id/btn_sign_in" />

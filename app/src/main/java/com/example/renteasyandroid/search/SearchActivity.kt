@@ -74,6 +74,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                         adapter = SearchAdapter(it.toMutableList()) { response ->
                             RentDetailActivity.start(
                                 this,
+                                response.id,
                                 response.image,
                                 response.title,
                                 response.address,
