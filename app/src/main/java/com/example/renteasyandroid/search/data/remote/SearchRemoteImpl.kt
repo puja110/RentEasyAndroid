@@ -27,7 +27,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
         val items = mutableListOf<SearchResponse>()
         items.add(
             SearchResponse(
-                id = 5,
+                id = "5",
                 title = "Beautiful House with a view",
                 image = "https://images.pexels.com/photos/209274/pexels-photo-209274.jpeg?auto=compress&cs=tinysrgb&w=1200",
                 address = "Owen street, Barrie",
@@ -44,7 +44,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
 
         items.add(
             SearchResponse(
-                id = 2,
+                id = "2",
                 title = "Small nature friendly house",
                 image = "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
@@ -61,7 +61,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
 
         items.add(
             SearchResponse(
-                id = 3,
+                id = "3",
                 title = "Apartment with great sea view",
                 image = "https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
@@ -77,7 +77,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
         )
         items.add(
             SearchResponse(
-                id = 4,
+                id = "4",
                 title = "Countryside home",
                 image = "https://images.pexels.com/photos/3990589/pexels-photo-3990589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
@@ -93,7 +93,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
         )
         items.add(
             SearchResponse(
-                id = 5,
+                id = "5",
                 title = "Small nature friendly house",
                 image = "https://images.pexels.com/photos/164558/pexels-photo-164558.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 address = "Owen street, Barrie",
@@ -110,7 +110,7 @@ class SearchRemoteImpl private constructor() : SearchRepository.Remote {
 
         items.add(
             SearchResponse(
-                id = 6,
+                id = "6",
                 title = "Beautiful House with a view",
                 image = "https://images.pexels.com/photos/209274/pexels-photo-209274.jpeg?auto=compress&cs=tinysrgb&w=1200",
                 address = "Owen street, Barrie",

@@ -60,7 +60,7 @@ class RegisterViewModel(
         viewModelScope.launch {
             registerUseCase.value = Response.loading()
             try {
-                registerUseCase.value = Response.complete(repository.registerUser(email, password))
+                registerUseCase.value = Response.complete(repository.signup(email, password))
             } catch (error: Exception) {
                 error.printStackTrace()
                 registerUseCase.value = Response.error(error)

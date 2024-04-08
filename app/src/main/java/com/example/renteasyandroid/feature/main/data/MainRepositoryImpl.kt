@@ -40,15 +40,13 @@ class MainRepositoryImpl constructor(
         }
     }
 
-    override suspend fun saveRecentlyUpdatedResponse() {
-        val remoteResponse = remoteRepository.getRecentlyUpdatedResponse()
-        localRepository.insert(remoteResponse)
-    }
+//    override suspend fun saveRecentlyUpdatedResponse() {
+//        val remoteResponse = remoteRepository.getRecentlyUpdatedResponse()
+//        localRepository.insert(remoteResponse)
+//    }
 
     override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
-        return withContext(Dispatchers.IO) {
-            localRepository.getRecentlyUpdatedData()
-        }
+        return remoteRepository.getRecentlyUpdatedResponse()
     }
 
     override suspend fun getFavouritesResponse(): List<FavouritesResponse> {

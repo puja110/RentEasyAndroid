@@ -118,7 +118,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                     propertyCategory = type,
                     propertyName = title,
                     propertySize = type,
-                    imageUrls = listOf("")
+                    imageUrls = listOf("https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
                 )
                 viewModel.postRent(request)
             }

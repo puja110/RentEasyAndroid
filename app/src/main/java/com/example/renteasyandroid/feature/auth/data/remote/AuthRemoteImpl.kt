@@ -25,7 +25,7 @@ class AuthRemoteImpl private constructor() : AuthRepository.Remote {
     }
 
     //inserts the created users data to the local database
-    override suspend fun registerUser(email: String, password: String): Boolean {
+    override suspend fun register(email: String, password: String): Boolean {
 
         // Create a new user account with email and password
         return try {

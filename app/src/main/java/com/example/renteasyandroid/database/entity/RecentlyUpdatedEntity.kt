@@ -6,17 +6,19 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "recently_updated")
 data class RecentlyUpdatedEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
-    @ColumnInfo(name = "title") val title: String?,
-    @ColumnInfo(name = "image") val image: String?,
-    @ColumnInfo(name = "address") val address: String?,
-    @ColumnInfo(name = "roomCount") val roomCount: String?,
-    @ColumnInfo(name = "currency_code") val currencyCode: String?,
-    @ColumnInfo(name = "price") val price: String?,
-    @ColumnInfo(name = "price_type") val priceType: String?,
-    @ColumnInfo(name = "status") val status: String?,
-    @ColumnInfo(name = "rating") val rating: Float?,
-    @ColumnInfo(name = "owner") val owner: String?,
-    @ColumnInfo(name = "description") val description: String?,
+    @PrimaryKey
+    val id: Int,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "imageUrls") val imageUrls: String,
+    @ColumnInfo(name = "isBooked") val isBooked: Boolean,
+    @ColumnInfo(name = "isNegotiable") val isNegotiable: Boolean,
+    @ColumnInfo(name = "latitude") val latitude: Double,
+    @ColumnInfo(name = "longitude") val longitude: Double,
+    @ColumnInfo(name = "posterUserID") val posterUserID: String,
+    @ColumnInfo(name = "propertyAddress") val propertyAddress: String,
+    @ColumnInfo(name = "propertyAmount") val propertyAmount: Int,
+    @ColumnInfo(name = "propertyCategory") val propertyCategory: String,
+    @ColumnInfo(name = "propertyName") val propertyName: String,
+    @ColumnInfo(name = "propertySize") val propertySize: String
+
 )
