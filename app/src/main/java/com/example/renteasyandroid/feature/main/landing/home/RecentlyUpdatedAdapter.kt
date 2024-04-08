@@ -9,11 +9,12 @@ import com.example.renteasyandroid.base.BaseAdapter
 import com.example.renteasyandroid.base.BaseViewHolder
 import com.example.renteasyandroid.databinding.ItemRecentlyUpdatedBinding
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import java.util.EventListener
 
 class RecentlyUpdatedAdapter(
     private var dataList: MutableList<RecentlyUpdatedResponse>,
-    private val onItemSelectedListener: (RecentlyUpdatedResponse) -> Unit
-    ) : BaseAdapter<RecentlyUpdatedResponse, RecentlyUpdatedAdapter.RecentlyUpdatedViewHolder>() {
+    private val onItemSelectedListener: (RecentlyUpdatedResponse, String) -> Unit,
+) : BaseAdapter<RecentlyUpdatedResponse, RecentlyUpdatedAdapter.RecentlyUpdatedViewHolder>() {
 
     override fun getViewHolder(binding: ViewDataBinding, viewType: Int): RecentlyUpdatedViewHolder {
         return RecentlyUpdatedViewHolder(binding as ItemRecentlyUpdatedBinding)
@@ -57,7 +58,7 @@ class RecentlyUpdatedAdapter(
             binding.tvAddress.text = obj.propertyAddress
             binding.tvRoomCount.text = "${obj.propertySize} room"
             binding.tvPrice.text = "CA ${obj.propertyAmount}"
-            binding.tvStatus.text =  if (obj.isBooked == true) "Booked" else "Available"
+            binding.tvStatus.text = if (obj.isBooked == true) "Booked" else "Available"
 
             val status = if (obj.isBooked == true) "Booked" else "Available"
             if (status == "Available") {
@@ -85,7 +86,11 @@ class RecentlyUpdatedAdapter(
             }
 
             binding.cvRecentlyUpdated.setOnClickListener {
-                onItemSelectedListener(obj)
+                onItemSelectedListener(obj, "")
+            }
+
+            binding.tvStatus.setOnClickListener {
+                onItemSelectedListener(obj, "")
             }
         }
     }
