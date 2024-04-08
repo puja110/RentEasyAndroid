@@ -34,9 +34,9 @@ class AuthRepositoryImpl constructor(
         }
     }
 
-    override suspend fun insert(userEntity: UserEntity): Boolean {
+    override suspend fun insert(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val response = localRepository.insert(userEntity)
+            val response = localRepository.register(email, password)
             response
         }
     }

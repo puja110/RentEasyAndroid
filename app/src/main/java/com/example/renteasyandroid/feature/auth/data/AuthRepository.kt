@@ -4,7 +4,7 @@ import com.example.renteasyandroid.database.entity.UserEntity
 
 interface AuthRepository {
     interface Local {
-        suspend fun insert(userEntity: UserEntity): Boolean
+        suspend fun register(email: String, password: String): Boolean
         suspend fun authenticateUser(email: String, password: String): String
     }
 
