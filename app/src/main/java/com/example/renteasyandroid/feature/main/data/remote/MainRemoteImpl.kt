@@ -1,17 +1,19 @@
 package com.example.renteasyandroid.feature.main.data.remote
 
+import android.util.Log
 import com.example.renteasyandroid.feature.main.data.MainRepository
+import com.example.renteasyandroid.feature.main.data.model.AddPostRequest
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
-import com.example.renteasyandroid.remote.ApiService
+import com.example.renteasyandroid.remote.FirebaseApiService
 
 class MainRemoteImpl private constructor() : MainRepository.Remote {
 
     private val apiService by lazy {
-        ApiService.getInstance()
+        FirebaseApiService.getInstance()
     }
 
     companion object {
@@ -274,6 +276,37 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             )
         )
         return items
+    }
+
+    override suspend fun postRent(
+        request: AddPostRequest
+    ): String {
+        println("getUUidFirebase${request.posterUserID}")
+        val data = hashMapOf(
+            "description" to request.description,
+            "isBooked" to request.isBooked,
+            "isNegotiable" to request.isNegotiable,
+            "latitude" to request.latitude,
+            "longitude" to request.longitude,
+            "posterUserID" to request.posterUserID,
+            "propertyAddress" to request.propertyAddress,
+            "propertyAmount" to request.propertyAmount,
+            "propertyCategory" to request.propertyCategory,
+            "propertyName" to request.propertyName,
+            "propertySize" to request.propertySize,
+            "imageUrls" to request.imageUrls
+        )
+        val response =
+            apiService.collection("properties").add(data).addOnSuccessListener {
+                Log.d("GETDOCUMENTID", "DocumentSnapshot added with ID: ${it.id}")
+            }.addOnFailureListener { e ->
+                Log.w("GETDOCUMENTID", "Error adding document", e)
+            }
+        return if (response.isSuccessful) {
+            "Success"
+        } else {
+            response.exception?.message.toString()
+        }
     }
 
 }

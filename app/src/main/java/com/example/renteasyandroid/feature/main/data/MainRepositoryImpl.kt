@@ -2,6 +2,7 @@ package com.example.renteasyandroid.feature.main.data
 
 import android.content.Context
 import com.example.renteasyandroid.feature.main.data.local.MainLocalImpl
+import com.example.renteasyandroid.feature.main.data.model.AddPostRequest
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
@@ -65,6 +66,16 @@ class MainRepositoryImpl constructor(
     override suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse> {
         return withContext(Dispatchers.IO) {
             remoteRepository.getNearPublicFacilitiesResponse()
+        }
+    }
+
+    override suspend fun postRent(
+        request: AddPostRequest
+    ): String {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.postRent(
+                request
+            )
         }
     }
 }

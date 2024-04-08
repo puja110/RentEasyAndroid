@@ -1,13 +1,16 @@
 package com.example.renteasyandroid.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.renteasyandroid.R
+import com.example.renteasyandroid.utils.Permissons.checkFineLocation
 import www.sanju.motiontoast.MotionToast
 import www.sanju.motiontoast.MotionToastStyle
 
@@ -61,15 +64,20 @@ fun isValidContext(context: Context?): Boolean {
     }
     if (context is Activity) {
         val activity: Activity = context
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            !activity.isDestroyed && !activity.isFinishing
-        } else {
-            !activity.isFinishing
-        }
+        return !activity.isDestroyed && !activity.isFinishing
     }
     return true
 }
 
 inline fun <R> R?.orElse(block: () -> R): R {
     return this ?: block()
+}
+
+@SuppressLint("MissingPermission")
+fun Activity.gpsProvider(): Location? {
+    if (this.checkFineLocation()) {
+        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+    }
+    return null
 }
