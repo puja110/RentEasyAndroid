@@ -7,7 +7,11 @@ import androidx.fragment.app.viewModels
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseFragment
 import com.example.renteasyandroid.databinding.FragmentProfileBinding
+import com.example.renteasyandroid.feature.auth.login.LoginActivity
+import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
@@ -26,6 +30,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnLogout.setOnClickListener {
+            // Create a new user account with email and password
+            try {
+                FirebaseAuth.getInstance().signOut()
+                LoginActivity.start(requireActivity())
+            } catch (e: Exception) {
+            }
+        }
     }
 
     override fun initObservers() {
