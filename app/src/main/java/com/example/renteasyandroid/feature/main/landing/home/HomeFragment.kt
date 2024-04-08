@@ -96,6 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
                             RentDetailActivity.start(
                                 requireActivity(),
+                                response.id,
                                 response.image,
                                 response.title,
                                 response.address,
