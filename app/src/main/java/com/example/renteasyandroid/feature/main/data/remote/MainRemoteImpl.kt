@@ -10,6 +10,7 @@ import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesR
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.remote.FirebaseApiService
 import com.example.renteasyandroid.remote.ApiService
+import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -76,10 +77,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             val snapshot = apiService.collection("properties").get().await()
             val items = mutableListOf<RecentlyUpdatedResponse>()
             for (document in snapshot.documents) {
-                Log.d("recently updated", document.data.toString())
-                document.toObject(RecentlyUpdatedResponse::class.java)?.let { recentlyUpdated ->
-//                    recentlyUpdated.id = document.id
-                    Log.d("recently updated", recentlyUpdated.propertyName)
+                document.toObject<RecentlyUpdatedResponse>()?.let { recentlyUpdated ->
+                    recentlyUpdated.id = document.id
+                    Log.d("recently updated", recentlyUpdated.toString())
                     items.add(recentlyUpdated)
                 }
             }
@@ -88,7 +88,6 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         } catch (e: Exception) {
             // Handle the exception, e.g., log it or return an empty list
             throw Error(e)
-            emptyList()
         }
     }
 

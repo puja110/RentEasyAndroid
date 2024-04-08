@@ -102,7 +102,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
     companion object {
         fun start(
             activity: Activity,
-            id: String,
+            // id: String,
             image: String,
             title: String,
             address: String,
@@ -113,7 +113,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
             countryCode: String
         ) {
             val intent = Intent(activity, RentDetailActivity::class.java)
-            intent.putExtra("id", id)
+            // intent.putExtra("id", id)
             intent.putExtra("image", image)
             intent.putExtra("title", title)
             intent.putExtra("address", address)

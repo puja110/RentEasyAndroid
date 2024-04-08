@@ -100,13 +100,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
                             RentDetailActivity.start(
                                 requireActivity(),
-                                response.id,
-                                response.imageUrls[0],
-                                response.propertyName,
-                                response.propertyAddress,
-                                response.propertySize,
-                                response.description,
-                                response.posterUserID,
+                                response.imageUrls?.get(0) ?: "",
+                                response.propertyName ?: "",
+                                response.propertyAddress ?: "",
+                                response.propertySize ?: "",
+                                response.description ?: "",
+                                response.posterUserID ?: "",
                                 response.propertyAmount.toString(),
                                 "CA"
                             )
