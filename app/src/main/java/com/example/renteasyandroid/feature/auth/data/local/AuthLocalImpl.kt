@@ -26,29 +26,13 @@ class AuthLocalImpl private constructor(
     }
 
     //inserts the created users data to the local database
-    override suspend fun registerUser(userEntity: UserEntity): Boolean {
-        val allData = databaseManager.getInstance().getUsersDao().getUsers()
-        if (allData.isNotEmpty()) {
-            for (existingUser in allData) {
-                if (existingUser == userEntity) {
-                    // User already exists, return false
-                    return false
-                }
-            }
-        }
+    override suspend fun register(email: String, password: String): Boolean {
 
-        // Create a new user account with email and password
         return try {
-            userEntity.email?.let {
-                userEntity.password?.let { it1 ->
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        it, it1
-                    ).await()
-                }
-            }
-            // User registered successfully
-            // You can perform additional actions here (e.g., store additional user data)
-            databaseManager.getInstance().getUsersDao().insert(userEntity)
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                email, password
+            ).await()
+            // Create a new user account with email and password
             true
         } catch (e: Exception) {
             // Handle registration failure
@@ -60,11 +44,6 @@ class AuthLocalImpl private constructor(
 
 
     override suspend fun authenticateUser(email: String, password: String): String {
-        val allData = databaseManager.getInstance().getUsersDao().getUsers()
-        if (allData.isNotEmpty()) {
-            for (userEntity in allData) {
-                if (userEntity.email == email && userEntity.password == password) {
-                    // User found in local data, now authenticate with Firebase
                     return try {
                         val response = FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
                         response.user?.uid ?: ""
@@ -72,13 +51,7 @@ class AuthLocalImpl private constructor(
                         // Handle sign-in failure
                         "Sign-in failed: ${e.message}"
                     }
-                }
-            }
-            // If the loop completes without finding a matching user
-            return "Username and password did not match!"
-        } else {
-            return "Looks like you have not registered yet!"
-        }
+
     }
 
 }
