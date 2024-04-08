@@ -26,7 +26,7 @@ class AuthLocalImpl private constructor(
     }
 
     //inserts the created users data to the local database
-    override suspend fun insert(userEntity: UserEntity): Boolean {
+    override suspend fun registerUser(userEntity: UserEntity): Boolean {
         val allData = databaseManager.getInstance().getUsersDao().getUsers()
         if (allData.isNotEmpty()) {
             for (existingUser in allData) {
