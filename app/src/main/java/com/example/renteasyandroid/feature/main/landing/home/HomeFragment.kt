@@ -11,7 +11,6 @@ import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseFragment
 import com.example.renteasyandroid.databinding.FragmentHomeBinding
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
-import com.example.renteasyandroid.feature.main.landing.detail.RentDetailActivity
 import com.example.renteasyandroid.search.SearchActivity
 import com.example.renteasyandroid.utils.Status
 
@@ -102,17 +101,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     response.data?.let {
                         rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
                             Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
-                            RentDetailActivity.start(
-                                requireActivity(),
-                                response.imageUrls?.get(0) ?: "",
-                                response.propertyName ?: "",
-                                response.propertyAddress ?: "",
-                                response.propertySize ?: "",
-                                response.description ?: "",
-                                response.posterUserID ?: "",
-                                response.propertyAmount.toString(),
-                                "$",
-                            )
+                            if (response.isFavourite == null || response.isFavourite != true) {
+                                response.id?.let { it1 ->
+                                    viewModel.setFavorite(it1, false)
+                                    response.isFavourite = true
+                                }
+                            } else {
+                                response.id?.let { it1 ->
+                                    viewModel.setFavorite(it1, true)
+                                    response.isFavourite = false
+                                }
+                            }
+//                            RentDetailActivity.start(
+//                                requireActivity(),
+//                                response.imageUrls?.get(0) ?: "",
+//                                response.propertyName ?: "",
+//                                response.propertyAddress ?: "",
+//                                response.propertySize ?: "",
+//                                response.description ?: "",
+//                                response.posterUserID ?: "",
+//                                response.propertyAmount.toString(),
+//                                "$",
+//                            )
                         }
 
                         binding.rvRecentlyUpdated.adapter = rAdapter
@@ -133,12 +143,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 Status.LOADING -> {
                     // Show loading indicator
                 }
+
                 Status.COMPLETE -> {
-                    Toast.makeText(context, "Favorite updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Favorite updated successfully", Toast.LENGTH_SHORT)
+                        .show()
                     // Update UI to reflect the favorite has been added
                 }
+
                 Status.ERROR -> {
-                    Toast.makeText(context, "Failed to update favorite: ${response.error?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Failed to update favorite: ${response.error?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     // Optionally, update UI to reflect the failure
                 }
             }

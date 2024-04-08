@@ -78,12 +78,28 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
     }
 
     override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
+        val currentUser = Firebase.auth.currentUser
         return try {
+            if (currentUser == null) {
+                Log.w("Error", "No authenticated user found")
+                return emptyList()
+            }
+
+            // Fetch the list of favourite property IDs once
+            val favouritesSnapshot = apiService.collection("users")
+                .document(currentUser.uid)
+                .collection("favorites")
+                .get().await()
+
+            val favouriteIds = favouritesSnapshot.documents.map { it.id }
+
             val snapshot = apiService.collection("properties").get().await()
             val items = mutableListOf<RecentlyUpdatedResponse>()
             for (document in snapshot.documents) {
                 document.toObject<RecentlyUpdatedResponse>()?.let { recentlyUpdated ->
-                    recentlyUpdated.id = document.id
+                    // Check if the current property's ID is in the list of favourite IDs
+                    recentlyUpdated.isFavourite = favouriteIds.contains(document.id)
+                    recentlyUpdated.id = document.id // Assuming RecentlyUpdatedResponse has an 'id' field
                     Log.d("recently updated", recentlyUpdated.toString())
                     items.add(recentlyUpdated)
                 }
@@ -91,8 +107,8 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
 
             items
         } catch (e: Exception) {
-            // Handle the exception, e.g., log it or return an empty list
-            throw Error(e)
+            Log.e("Error", "Error fetching recently updated properties", e)
+            emptyList() // Return an empty list in case of error
         }
     }
 
@@ -104,9 +120,15 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
                 val snapshot = apiService.collection("users").document(currentUser.uid).collection("favorites").get().await()
                 snapshot.documents.forEach { document ->
                     document.toObject<UserFavouriteResponse>()?.let { favorites ->
-                        val item = apiService.collection("properties").document(favorites.propertyId).get().await()
-                        item.toObject<FavouritesResponse>()?.let {
-                            items.add(it)
+                        val item = favorites.propertyId?.let {
+                            apiService.collection("properties").document(
+                                it
+                            ).get().await()
+                        }
+                        if (item != null) {
+                            item.toObject<FavouritesResponse>()?.let {
+                                items.add(it)
+                            }
                         }
                     }
                 }
@@ -183,24 +205,38 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
-    override suspend fun setFavorites(propertyId: String): Boolean {
+    override suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean {
         val currentUser = Firebase.auth.currentUser
         return try {
             // Ensure we have a logged-in user
             if (currentUser != null) {
-                // Reference to the user's document
-                val userDocRef = apiService.collection("users").document(currentUser.uid)
+                // Reference to the "favorites" subcollection under the user's document
+                val favoritesSubcollectionRef = apiService.collection("users").document(currentUser.uid).collection("favorites")
 
-                // Atomically add the propertyId to the "favorites" array field
-                userDocRef.update("favorites", FieldValue.arrayUnion(propertyId)).await()
-                Log.d(Companion.TAG, "Favorites updated successfully")
-                true
+                if (remove) {
+                    // Query the subcollection for documents with the matching "propertyId"
+                    val querySnapshot = favoritesSubcollectionRef.whereEqualTo("propertyId", propertyId).get().await()
+
+                    // Delete all documents that match the query (should be only one if "propertyId" is unique)
+                    querySnapshot.documents.forEach { document ->
+                        document.reference.delete().await()
+                    }
+                    true
+                } else {
+                    // Create or overwrite a document with the given propertyId in the "favorites" subcollection
+                    // Here, we're directly using the propertyId as the document ID for simplicity
+                    // The favoriteData map can contain additional information if needed
+                    val favoriteData = hashMapOf("propertyId" to propertyId)
+                    favoritesSubcollectionRef.document(propertyId).set(favoriteData).await()
+                    Log.d(Companion.TAG, "Favorite added successfully: $propertyId")
+                    true
+                }
             } else {
                 Log.w(Companion.TAG, "No authenticated user found")
                 false
             }
         } catch (e: Exception) {
-            Log.w(Companion.TAG, "Error updating favorites", e)
+            Log.w(Companion.TAG, "Error processing favorite", e)
             false
         }
     }

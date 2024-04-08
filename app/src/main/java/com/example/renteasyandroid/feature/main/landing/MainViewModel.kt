@@ -141,13 +141,15 @@ class MainViewModel(
         }
     }
 
-    fun setFavorite(propertyId: String) {
+    fun  setFavorite(propertyId: String, remove: Boolean) {
         viewModelScope.launch {
             _favoritesUpdateStatus.value = Response.loading()
             try {
-                val result = repository.setFavorites(propertyId)
+                val result = repository.setFavorites(propertyId, remove)
                 if (result) {
                     _favoritesUpdateStatus.value = Response.complete(result)
+                    getFavouritesResponse()
+                    getRecentlyUpdatedResponse()
                 } else {
                     _favoritesUpdateStatus.value = Response.error(Throwable("Failed to update favorites"))
                 }

@@ -66,9 +66,9 @@ class MainRepositoryImpl constructor(
         }
     }
 
-    override suspend fun setFavorites(propertyId: String): Boolean {
+    override suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean {
         return withContext(Dispatchers.IO) {
-            remoteRepository.setFavorites(propertyId)
+            remoteRepository.setFavorites(propertyId, remove)
         }
     }
 

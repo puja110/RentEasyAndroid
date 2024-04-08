@@ -77,7 +77,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>() {
             description: String,
             owner: String,
             price: String,
-            countryCode: String
+            countryCode: String,
         ) {
             val intent = Intent(activity, RentDetailActivity::class.java)
             intent.putExtra("image", image)

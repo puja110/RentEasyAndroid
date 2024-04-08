@@ -39,18 +39,29 @@ class FavouritesAdapter(
         BaseViewHolder<FavouritesResponse>(binding) {
         override fun bindView(obj: FavouritesResponse) {
             super.bindView(obj)
-            binding.tvTitle.text = obj.title
-            Glide.with(binding.root.context)
-                .load(obj.image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.ic_logo).into(binding.ivFavourites)
+            binding.ivFavourite.setImageResource(R.drawable.ic_heart_fill)
+            binding.tvTitle.text = obj.propertyName
+            if (!obj.imageUrls.isNullOrEmpty() && obj.imageUrls.isNotEmpty()) {
+                Glide.with(binding.root.context)
+                    .load(obj.imageUrls[0]) // Since we've already checked for null or empty, directly access the first item
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.ic_logo)
+                    .into(binding.ivFavourites)
+            } else {
+                // Optionally, handle the case where there are no URLs, e.g., by setting a default image
+                Glide.with(binding.root.context)
+                    .load("\"https://firebasestorage.googleapis.com:443/v0/b/renteasy-7a973.appspot.com/o/propertyImages%2FE499D4D7-2441-4048-8424-F59D51118D46.jpg?alt=media&token=d591f92b-ea82-4007-a584-47f11c9dfc44\"") // Assuming ic_default_placeholder is a default image in your drawables
+                    .into(binding.ivFavourites)
+            }
 
-            binding.tvPer.text = "/ ${obj.price_type}"
-            binding.tvAddress.text = obj.address
-            binding.tvRoomCount.text = "${obj.roomCount} room"
-            binding.tvPrice.text = "${obj.currency_code}${obj.price}"
-            binding.tvStatus.text = obj.status
-            if (obj.status == "Available") {
+            binding.tvPer.text = obj.propertyCategory
+            binding.tvAddress.text = obj.propertyAddress
+            binding.tvRoomCount.text = "${obj.propertySize} room"
+            binding.tvPrice.text = "$ ${obj.propertyAmount}"
+            binding.tvStatus.text = if (obj.isBooked == true) "Booked" else "Available"
+
+            val status = if (obj.isBooked == true) "Booked" else "Available"
+            if (status == "Available") {
                 binding.tvStatus.setTextColor(
                     ContextCompat.getColor(
                         binding.tvStatus.context,
@@ -75,8 +86,14 @@ class FavouritesAdapter(
             }
 
             binding.cvFavourites.setOnClickListener {
+//                onItemSelectedListener(obj)
+            }
+
+            binding.ivFavourite.setOnClickListener {
+                binding.ivFavourite.setImageResource(R.drawable.ic_heart)
                 onItemSelectedListener(obj)
             }
+
         }
     }
 }

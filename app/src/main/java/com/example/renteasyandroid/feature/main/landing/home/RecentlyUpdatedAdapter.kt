@@ -41,6 +41,7 @@ class RecentlyUpdatedAdapter(
         override fun bindView(obj: RecentlyUpdatedResponse) {
             super.bindView(obj)
             binding.tvTitle.text = obj.propertyName
+
             if (!obj.imageUrls.isNullOrEmpty() && obj.imageUrls.isNotEmpty()) {
                 Glide.with(binding.root.context)
                     .load(obj.imageUrls[0]) // Since we've already checked for null or empty, directly access the first item
@@ -85,14 +86,20 @@ class RecentlyUpdatedAdapter(
                 )
             }
 
+            if(obj.isFavourite == true){
+                binding.ivFavourite.setImageResource(R.drawable.ic_heart_fill)
+            }else {
+                binding.ivFavourite.setImageResource(R.drawable.ic_heart)
+
+            }
+
             binding.cvRecentlyUpdated.setOnClickListener {
-                onItemSelectedListener(obj)
+//                onItemSelectedListener(obj)
             }
 
             binding.ivFavourite.setOnClickListener {
                 Log.d(Companion.TAG, "bindView: ")
-                binding.ivFavourite.setImageResource(R.drawable.ic_heart_fill)
-
+                onItemSelectedListener(obj)
             }
 
         }

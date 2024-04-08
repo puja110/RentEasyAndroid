@@ -13,5 +13,6 @@ data class RecentlyUpdatedResponse(
     val propertyAmount: Int? = null,
     val propertyCategory: String? = null,
     val propertyName: String? = null,
-    val propertySize: String? = null
+    val propertySize: String? = null,
+    var isFavourite: Boolean? = null
 )
