@@ -11,6 +11,8 @@ import com.example.renteasyandroid.databinding.ActivityLoginBinding
 import com.example.renteasyandroid.feature.auth.forgotpassword.ForgotPasswordActivity
 import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 import com.example.renteasyandroid.feature.main.landing.MainActivity
+import com.example.renteasyandroid.utils.PreferenceHelper
+import com.example.renteasyandroid.utils.PreferenceHelper.setUsername
 import com.example.renteasyandroid.utils.ProgressDialog
 import com.example.renteasyandroid.utils.SharedPreferenceManager
 import com.example.renteasyandroid.utils.Status
@@ -45,6 +47,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
 
         preference = SharedPreferenceManager(this)
+        val prefs = PreferenceHelper.customPreference(this)
 
         if (preference.email?.isNotEmpty() == true && preference.password?.isNotEmpty() == true) {
             binding.cbRemember.isChecked = true
@@ -65,6 +68,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     preference.email = email
                     preference.password = password
                 }
+                prefs.setUsername = email
                 viewModel.authenticateUser(email, password)
             }
         }

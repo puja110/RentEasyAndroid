@@ -22,8 +22,11 @@ import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.database.MainDatabase
 import com.example.renteasyandroid.database.entity.UserRatingEntity
 import com.example.renteasyandroid.databinding.ActivityRentDetailBinding
+import com.example.renteasyandroid.feature.main.data.model.UserRatingResponseList
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
 import com.example.renteasyandroid.utils.PreferenceHelper
+import com.example.renteasyandroid.utils.PreferenceHelper.setUsername
+import com.example.renteasyandroid.utils.SharedPreferenceManager
 import com.example.renteasyandroid.utils.Status
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -94,6 +97,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
     private var adapter: HomeFacilitiesAdapter? = null
     private var nAdapter: NearPublicFacilitiesAdapter? = null
     private var progressDialog: ProgressDialog? = null
+    private lateinit var preference: SharedPreferenceManager
 
     companion object {
         fun start(
@@ -127,8 +131,28 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.ivBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+
+        val database = MainDatabase.getInstance(this)
+        val prefs = PreferenceHelper.customPreference(this)
+        preference = SharedPreferenceManager(this)
+        progressDialog = ProgressDialog(this)
+
+        var sizeOfDatabase: Int
+        launch {
+            sizeOfDatabase = database?.getUserRatingDao()?.getSizeOfDatabaseById(id ?: -1) ?: 0
+            if (sizeOfDatabase < 1) {
+                UserRatingResponseList.getModel().forEach {
+                    database?.getUserRatingDao()?.addUserRating(
+                        UserRatingEntity(
+                            propertyId = id,
+                            username = it.username,
+                            rating = it.rating.toFloat(),
+                            description = it.review,
+                            userImage = it.userImage
+                        )
+                    )
+                }
+            }
         }
 
         binding.tvTitle.text = title
@@ -145,9 +169,9 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
         viewModel.getHomeFacilitiesResponse()
         viewModel.getNearPublicFacilitiesResponse()
 
-        val database = MainDatabase.getInstance(this)
-        val prefs = PreferenceHelper.customPreference(this)
-        progressDialog = ProgressDialog(this)
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         binding.ivShare.setOnClickListener {
             val shareIntent = Intent()
@@ -182,15 +206,14 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
                             database?.getUserRatingDao()?.addUserRating(
                                 UserRatingEntity(
                                     propertyId = id,
-                                    username = "Puja",
+                                    username = if (prefs.setUsername?.isNotEmpty() == true) {
+                                        prefs.setUsername
+                                    } else {
+                                        "John Doe"
+                                    },
                                     rating = rating.rating,
                                     description = review,
                                     userImage = "https://images.pexels.com/photos/10425598/pexels-photo-10425598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                                   /* username = if (prefs.setName?.isNotEmpty() == true) {
-                                        prefs.setName
-                                    } else {
-                                        "John Doe"
-                                    }*/
                                 )
                             )
                          }

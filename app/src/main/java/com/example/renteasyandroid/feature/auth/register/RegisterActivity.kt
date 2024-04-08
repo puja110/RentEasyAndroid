@@ -9,6 +9,8 @@ import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
 import com.example.renteasyandroid.databinding.ActivityRegisterBinding
 import com.example.renteasyandroid.feature.auth.forgotpassword.VerifyEmailActivity
+import com.example.renteasyandroid.utils.PreferenceHelper
+import com.example.renteasyandroid.utils.PreferenceHelper.setUsername
 import com.example.renteasyandroid.utils.ProgressDialog
 import com.example.renteasyandroid.utils.Status
 import com.example.renteasyandroid.utils.showToast
@@ -41,18 +43,24 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val prefs = PreferenceHelper.customPreference(this)
+
         binding.tvBackToLogin.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
         binding.btnRegister.setOnClickListener {
             if (isValid()) {
                 viewModel.createUser(firstName, lastName, email, phone, password)
+                if (prefs.setUsername?.isEmpty() == true) {
+                    prefs.setUsername = firstName
+                }
             }
         }
     }
 
 
-//    Validation done to check if the required fields are empty, email is in valid format
+    // Validation done to check if the required fields are empty, email is in valid format
     private fun isValid(): Boolean {
         firstName = binding.etFirstName.text.toString()
         lastName = binding.etLastName.text.toString()

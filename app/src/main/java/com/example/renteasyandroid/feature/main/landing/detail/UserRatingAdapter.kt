@@ -24,7 +24,7 @@ class UserRatingAdapter(
     ): UserRatingAdapter.ModelViewHolder {
 
         val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_ratings_review, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_user_rating, parent, false)
         return ModelViewHolder(v)
     }
 
