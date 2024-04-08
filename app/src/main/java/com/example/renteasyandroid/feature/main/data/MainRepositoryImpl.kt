@@ -65,4 +65,11 @@ class MainRepositoryImpl constructor(
             remoteRepository.getNearPublicFacilitiesResponse()
         }
     }
+
+    override suspend fun setFavorites(propertyId: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.setFavorites(propertyId)
+        }
+    }
+
 }

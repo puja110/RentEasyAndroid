@@ -34,7 +34,7 @@ class AuthRepositoryImpl constructor(
         }
     }
 
-     override suspend fun signup(email: String, password: String): Boolean {
+     override  suspend fun signup(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
             val response = remoteRepository.register(email, password)
             response

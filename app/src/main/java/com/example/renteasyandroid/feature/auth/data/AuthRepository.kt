@@ -1,5 +1,6 @@
 package com.example.renteasyandroid.feature.auth.data
 
+import android.content.Context
 import com.example.renteasyandroid.database.entity.UserEntity
 
 interface AuthRepository {

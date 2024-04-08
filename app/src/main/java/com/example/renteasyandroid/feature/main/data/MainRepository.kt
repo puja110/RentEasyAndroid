@@ -19,12 +19,14 @@ interface MainRepository {
         suspend fun getFavouritesResponse(): List<FavouritesResponse>
         suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse>
         suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
+        suspend fun setFavorites(propertyId: String): Boolean
     }
 
     suspend fun getCategories(): List<CategoryResponse>
-//    suspend fun saveRecentlyUpdatedResponse()
     suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>
     suspend fun getFavouritesResponse(): List<FavouritesResponse>
     suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse>
     suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
+
+    suspend fun setFavorites(propertyId: String): Boolean
 }

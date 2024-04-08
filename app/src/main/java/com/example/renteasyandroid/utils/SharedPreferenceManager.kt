@@ -20,4 +20,6 @@ class SharedPreferenceManager constructor(var context: Context) {
         get() = sharedPreferences.getString(Constants.PREF_TOKEN, "")
         set(value) = sharedPreferences.edit() { putString(Constants.PREF_TOKEN, value) }
 
+
+
 }

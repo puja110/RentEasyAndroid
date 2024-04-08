@@ -1,7 +1,9 @@
 package com.example.renteasyandroid.feature.auth.data.remote
 
+import android.content.Context
 import com.example.renteasyandroid.feature.auth.data.AuthRepository
 import com.example.renteasyandroid.remote.ApiService
+import com.example.renteasyandroid.utils.SharedPreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 

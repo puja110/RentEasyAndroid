@@ -62,6 +62,9 @@ class MainViewModel(
     val nearPublicFacilitiesResponse: LiveData<Response<List<NearPublicFacilitiesResponse>>> =
         nearPublicFacilitiesUseCase
 
+    private val _favoritesUpdateStatus = MutableLiveData<Response<Boolean>>()
+    val favoritesUpdateStatus: LiveData<Response<Boolean>> = _favoritesUpdateStatus
+
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)
@@ -137,4 +140,22 @@ class MainViewModel(
             }
         }
     }
+
+    fun setFavorite(propertyId: String) {
+        viewModelScope.launch {
+            _favoritesUpdateStatus.value = Response.loading()
+            try {
+                val result = repository.setFavorites(propertyId)
+                if (result) {
+                    _favoritesUpdateStatus.value = Response.complete(result)
+                } else {
+                    _favoritesUpdateStatus.value = Response.error(Throwable("Failed to update favorites"))
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error updating favorites", e)
+                _favoritesUpdateStatus.value = Response.error(e)
+            }
+        }
+    }
+
 }

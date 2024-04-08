@@ -7,17 +7,22 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserFavouriteResponse
 import com.example.renteasyandroid.remote.ApiService
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.toObject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class MainRemoteImpl private constructor() : MainRepository.Remote {
 
     private val apiService by lazy {
         ApiService.getInstance()
     }
+
+    private val currentUser = Firebase.auth.currentUser
 
     companion object {
         @Volatile
@@ -30,6 +35,8 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             }
             return MainRemoteImpl().also { instance = it }
         }
+
+        private const val TAG = "MainRemoteImpl"
     }
 
     override suspend fun getCategories(): List<CategoryResponse> {
@@ -70,7 +77,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
-    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>  {
+    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
         return try {
             val snapshot = apiService.collection("properties").get().await()
             val items = mutableListOf<RecentlyUpdatedResponse>()
@@ -90,62 +97,26 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
     }
 
     override suspend fun getFavouritesResponse(): List<FavouritesResponse> {
-        val items = mutableListOf<FavouritesResponse>()
-        items.add(
-            FavouritesResponse(
-                id = 1,
-                title = "Small nature friendly house",
-                image = "https://images.pexels.com/photos/277667/pexels-photo-277667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "2400",
-                currency_code = "$",
-                price_type = "month",
-                status = "Available"
-            )
-        )
+        return try {
 
-        items.add(
-            FavouritesResponse(
-                id = 2,
-                title = "Apartment with great sea view",
-                image = "https://images.pexels.com/photos/7475561/pexels-photo-7475561.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "5260",
-                currency_code = "$",
-                price_type = "month",
-                status = "Booked"
-            )
-        )
-        items.add(
-            FavouritesResponse(
-                id = 3,
-                title = "Countryside home",
-                image = "https://images.pexels.com/photos/3935328/pexels-photo-3935328.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "5260",
-                currency_code = "$",
-                price_type = "month",
-                status = "Booked"
-            )
-        )
-        items.add(
-            FavouritesResponse(
-                id = 4,
-                title = "Small nature friendly house",
-                image = "https://images.pexels.com/photos/10553915/pexels-photo-10553915.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "2400",
-                currency_code = "$",
-                price_type = "month",
-                status = "Available"
-            )
-        )
-
-        return items
+            val items = mutableListOf<FavouritesResponse>()
+            if (currentUser != null) {
+                val snapshot = apiService.collection("users").document(currentUser.uid).collection("favorites").get().await()
+                snapshot.documents.forEach { document ->
+                    document.toObject<UserFavouriteResponse>()?.let { favorites ->
+                        val item = apiService.collection("properties").document(favorites.propertyId).get().await()
+                        item.toObject<FavouritesResponse>()?.let {
+                            items.add(it)
+                        }
+                    }
+                }
+            }
+            items
+        } catch (e: Exception) {
+            // Handle the exception, e.g., log it or return an empty list
+            Log.e("Firestore Error", "Error fetching document", e)
+            emptyList()
+        }
     }
 
     override suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse> {
@@ -210,6 +181,28 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             )
         )
         return items
+    }
+
+    override suspend fun setFavorites(propertyId: String): Boolean {
+        val currentUser = Firebase.auth.currentUser
+        return try {
+            // Ensure we have a logged-in user
+            if (currentUser != null) {
+                // Reference to the user's document
+                val userDocRef = apiService.collection("users").document(currentUser.uid)
+
+                // Atomically add the propertyId to the "favorites" array field
+                userDocRef.update("favorites", FieldValue.arrayUnion(propertyId)).await()
+                Log.d(Companion.TAG, "Favorites updated successfully")
+                true
+            } else {
+                Log.w(Companion.TAG, "No authenticated user found")
+                false
+            }
+        } catch (e: Exception) {
+            Log.w(Companion.TAG, "Error updating favorites", e)
+            false
+        }
     }
 
 }
