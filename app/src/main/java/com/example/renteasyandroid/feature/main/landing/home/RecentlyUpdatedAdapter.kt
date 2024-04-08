@@ -13,7 +13,7 @@ import java.util.EventListener
 
 class RecentlyUpdatedAdapter(
     private var dataList: MutableList<RecentlyUpdatedResponse>,
-    private val onItemSelectedListener: (RecentlyUpdatedResponse, String) -> Unit,
+    private val onItemSelectedListener: (RecentlyUpdatedResponse) -> Unit
 ) : BaseAdapter<RecentlyUpdatedResponse, RecentlyUpdatedAdapter.RecentlyUpdatedViewHolder>() {
 
     override fun getViewHolder(binding: ViewDataBinding, viewType: Int): RecentlyUpdatedViewHolder {
@@ -61,7 +61,7 @@ class RecentlyUpdatedAdapter(
             binding.tvStatus.text = if (obj.isBooked == true) "Booked" else "Available"
 
             val status = if (obj.isBooked == true) "Booked" else "Available"
-            if (status == "Available") {
+            if (status == "Booked") {
                 binding.tvStatus.setTextColor(
                     ContextCompat.getColor(
                         binding.tvStatus.context,
@@ -86,11 +86,7 @@ class RecentlyUpdatedAdapter(
             }
 
             binding.cvRecentlyUpdated.setOnClickListener {
-                onItemSelectedListener(obj, "")
-            }
-
-            binding.tvStatus.setOnClickListener {
-                onItemSelectedListener(obj, "")
+                onItemSelectedListener(obj)
             }
         }
     }

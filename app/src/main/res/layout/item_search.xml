@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_favourites"
+                android:id="@+id/iv_search"
                 android:layout_width="140dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
                 android:textColor="@color/black_444444"
                 android:textSize="@dimen/text_size_16"
                 app:layout_constraintEnd_toStartOf="@+id/tv_status"
-                app:layout_constraintStart_toEndOf="@+id/iv_favourites"
+                app:layout_constraintStart_toEndOf="@+id/iv_search"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView

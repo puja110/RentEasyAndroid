@@ -91,12 +91,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.recentResponse.observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
+                    binding.progressBar.visibility = View.VISIBLE
                     Log.d(TAG, "observeRecentlyUpdatedResponse: ${Status.LOADING}")
                 }
 
                 Status.COMPLETE -> {
+                    binding.progressBar.visibility = View.GONE
                     response.data?.let {
-                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response, favorite ->
+                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
                             Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
                             RentDetailActivity.start(
                                 requireActivity(),
@@ -115,6 +117,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
 
                 Status.ERROR -> {
+                    binding.progressBar.visibility = View.GONE
 
                 }
             }
