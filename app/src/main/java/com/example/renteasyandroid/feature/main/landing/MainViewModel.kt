@@ -1,6 +1,7 @@
 package com.example.renteasyandroid.feature.main.landing
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -36,6 +37,8 @@ class MainViewModel(
                 )
             }
         }
+
+        private const val TAG = "MainViewModel"
     }
 
     private val categoryUseCase = MutableLiveData<Response<List<CategoryResponse>>>()
@@ -82,8 +85,7 @@ class MainViewModel(
         viewModelScope.launch {
             recentUseCase.value = Response.loading()
             try {
-//                repository.saveRecentlyUpdatedResponse()
-                repository.getRecentlyUpdatedResponse()
+                Log.d(TAG, "getRecentlyUpdatedResponse: ${repository.getRecentlyUpdatedResponse()}")
                 recentUseCase.value = Response.complete(
                     repository.getRecentlyUpdatedResponse()
                 )

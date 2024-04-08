@@ -1,6 +1,7 @@
 package com.example.renteasyandroid.feature.main.landing.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,6 +29,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         fun getInstance(): Fragment {
             return HomeFragment()
         }
+
+        private const val TAG = "HomeFragment"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initObservers() {
-        observeGroceryResponse()
+        observeCategoryResponse()
         observeRecentlyUpdatedResponse()
     }
 
@@ -53,7 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     //    Loading : to show the loading
     //    Complete : Called when success
     //    Error : called when there is an error
-    private fun observeGroceryResponse() {
+    private fun observeCategoryResponse() {
         viewModel.categoryResponse.observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
@@ -88,12 +91,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.recentResponse.observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
-
+                    Log.d(TAG, "observeRecentlyUpdatedResponse: ${Status.LOADING}")
                 }
 
                 Status.COMPLETE -> {
                     response.data?.let {
                         rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
+                            Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
                             RentDetailActivity.start(
                                 requireActivity(),
                                 response.imageUrls[0],

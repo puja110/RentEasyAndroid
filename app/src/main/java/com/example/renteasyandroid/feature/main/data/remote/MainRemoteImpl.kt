@@ -1,5 +1,6 @@
 package com.example.renteasyandroid.feature.main.data.remote
 
+import android.util.Log
 import com.example.renteasyandroid.feature.main.data.MainRepository
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
@@ -68,20 +69,23 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
-    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>  = withContext(
-        Dispatchers.IO) {
-        try {
+    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>  {
+        return try {
             val snapshot = apiService.collection("properties").get().await()
             val items = mutableListOf<RecentlyUpdatedResponse>()
             for (document in snapshot.documents) {
+                Log.d("recently updated", document.data.toString())
                 document.toObject(RecentlyUpdatedResponse::class.java)?.let { recentlyUpdated ->
-                    recentlyUpdated.id = document.id
+//                    recentlyUpdated.id = document.id
+                    Log.d("recently updated", recentlyUpdated.propertyName)
                     items.add(recentlyUpdated)
                 }
             }
+
             items
         } catch (e: Exception) {
             // Handle the exception, e.g., log it or return an empty list
+            throw Error(e)
             emptyList()
         }
     }

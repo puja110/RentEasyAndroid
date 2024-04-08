@@ -78,6 +78,7 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="@dimen/spacing_8"
                     android:hint="example@gmail.com"
+                    android:text="codesomps@gmail.com"
                     android:inputType="textEmailAddress"
                     android:nextFocusDown="@+id/btn_sign_in" />
 
@@ -116,6 +117,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
+                    android:text="admin666"
                     style="@style/edit_text_style_blue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
