@@ -189,6 +189,7 @@
                     android:text="Logout"
                     android:textColor="#ffffff"
                     android:textSize="16sp"
+                    android:textAllCaps="true"
                     android:background="@color/red"
                     app:fontFamily="@font/sansf_regular"
                     app:layout_constraintBottom_toBottomOf="parent"

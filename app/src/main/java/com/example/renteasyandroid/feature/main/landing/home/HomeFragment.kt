@@ -96,7 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 Status.COMPLETE -> {
                     response.data?.let {
-                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
+                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response, favorite ->
                             Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
                             RentDetailActivity.start(
                                 requireActivity(),

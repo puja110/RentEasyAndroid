@@ -1,5 +1,6 @@
 package com.example.renteasyandroid.feature.main.landing.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,10 +9,9 @@ import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseFragment
 import com.example.renteasyandroid.databinding.FragmentProfileBinding
 import com.example.renteasyandroid.feature.auth.login.LoginActivity
-import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.tasks.await
+
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
@@ -38,6 +38,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 LoginActivity.start(requireActivity())
             } catch (e: Exception) {
             }
+        }
+
+        binding.cvHeader.setOnClickListener {
+            val i = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(i)
+        }
+
+        binding.cvSetting.setOnClickListener {
+            val i = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(i)
         }
     }
 
