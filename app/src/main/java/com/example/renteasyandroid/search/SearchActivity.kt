@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import com.example.renteasyandroid.R
@@ -64,24 +64,25 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         viewModel.searchResponse.observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
-
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 Status.COMPLETE -> {
+                    binding.progressBar.visibility = View.GONE
                     response.data?.let {
                         list.clear()
                         list.addAll(it)
                         adapter = SearchAdapter(it.toMutableList()) { response ->
                             RentDetailActivity.start(
                                 this,
-                                response.image,
-                                response.title,
-                                response.address,
-                                response.roomCount,
-                                response.description,
-                                response.owner,
-                                response.price,
-                                response.currency_code
+                                response.imageUrls?.get(0) ?: "",
+                                response.propertyName ?: "",
+                                response.propertyAddress ?: "",
+                                response.propertySize ?: "",
+                                response.description ?: "",
+                                response.posterUserID ?: "",
+                                response.propertyAmount.toString(),
+                                "CA"
                             )
                         }
                         binding.rvSearch.adapter = adapter
@@ -89,7 +90,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 }
 
                 Status.ERROR -> {
-
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -100,18 +101,20 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         val newList: MutableList<SearchResponse> = mutableListOf()
 
         for (item in list) {
-            if (item.title.lowercase(Locale.getDefault())
+            if (item.propertyName!!.lowercase(Locale.getDefault())
                     .contains(text.lowercase(Locale.getDefault()))
             ) {
                 newList.add(item)
             }
         }
         if (newList.isEmpty()) {
-            Toast.makeText(this, "No Data Found!", Toast.LENGTH_SHORT).show()
+            binding.tvStatus.visibility = View.VISIBLE
+
         } else {
-            adapter?.updateData(newList)
-            adapter?.notifyDataSetChanged()
+            binding.tvStatus.visibility = View.GONE
         }
+        adapter?.updateData(newList)
+        adapter?.notifyDataSetChanged()
     }
 
 }
