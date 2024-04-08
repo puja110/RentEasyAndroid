@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.renteasyandroid.feature.main.data.MainRepository
 import com.example.renteasyandroid.feature.main.data.MainRepositoryImpl
+import com.example.renteasyandroid.feature.main.data.model.AddPostRequest
 import com.example.renteasyandroid.feature.main.data.model.CategoryResponse
 import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
@@ -59,6 +60,9 @@ class MainViewModel(
     val nearPublicFacilitiesResponse: LiveData<Response<List<NearPublicFacilitiesResponse>>> =
         nearPublicFacilitiesUseCase
 
+    private val addPostUseCase = MutableLiveData<Response<String>>()
+    val addPostResponse: LiveData<Response<String>> =
+        addPostUseCase
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)
@@ -131,6 +135,21 @@ class MainViewModel(
             } catch (error: Exception) {
                 error.printStackTrace()
                 nearPublicFacilitiesUseCase.value = Response.error(error)
+            }
+        }
+    }
+
+    fun postRent(
+        request: AddPostRequest
+    ) {
+        viewModelScope.launch {
+            addPostUseCase.value = Response.loading()
+            try {
+                addPostUseCase.value = Response.complete(repository.postRent(request))
+
+            } catch (error: Exception) {
+                error.printStackTrace()
+                addPostUseCase.value = Response.error(error)
             }
         }
     }

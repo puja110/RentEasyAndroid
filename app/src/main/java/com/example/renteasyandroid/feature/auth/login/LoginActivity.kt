@@ -13,6 +13,8 @@ import com.example.renteasyandroid.feature.auth.register.RegisterActivity
 import com.example.renteasyandroid.feature.main.landing.MainActivity
 import com.example.renteasyandroid.utils.PreferenceHelper
 import com.example.renteasyandroid.utils.PreferenceHelper.setUsername
+import com.example.renteasyandroid.utils.Permissons.checkFineLocation
+import com.example.renteasyandroid.utils.Permissons.requestFineLocation
 import com.example.renteasyandroid.utils.ProgressDialog
 import com.example.renteasyandroid.utils.SharedPreferenceManager
 import com.example.renteasyandroid.utils.Status
@@ -48,6 +50,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         preference = SharedPreferenceManager(this)
         val prefs = PreferenceHelper.customPreference(this)
+
+        if (!this.checkFineLocation()) {
+            this.requestFineLocation(123)
+        }
 
         if (preference.email?.isNotEmpty() == true && preference.password?.isNotEmpty() == true) {
             binding.cbRemember.isChecked = true
@@ -110,7 +116,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
                 Status.COMPLETE -> {
                     hideProgress()
-                    if (response.data.toString() == "success") {
+                    if (response.data?.isNotEmpty() == true) {
+                        preference.uuid = response.data
                         showToast("Success", "Login Successful!", MotionToastStyle.SUCCESS)
                         MainActivity.start(this)
                     } else {

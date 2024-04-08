@@ -39,7 +39,7 @@ class AuthLocalImpl private constructor(
 
         // Create a new user account with email and password
         return try {
-           userEntity.email?.let {
+            userEntity.email?.let {
                 userEntity.password?.let { it1 ->
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                         it, it1
@@ -66,18 +66,18 @@ class AuthLocalImpl private constructor(
                 if (userEntity.email == email && userEntity.password == password) {
                     // User found in local data, now authenticate with Firebase
                     return try {
-                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
-                        "success"
+                        val response = FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
+                        response.user?.uid ?: ""
                     } catch (e: Exception) {
                         // Handle sign-in failure
-                       "Sign-in failed: ${e.message}"
+                        "Sign-in failed: ${e.message}"
                     }
                 }
             }
             // If the loop completes without finding a matching user
             return "Username and password did not match!"
         } else {
-           return "Looks like you have not registered yet!"
+            return "Looks like you have not registered yet!"
         }
     }
 
