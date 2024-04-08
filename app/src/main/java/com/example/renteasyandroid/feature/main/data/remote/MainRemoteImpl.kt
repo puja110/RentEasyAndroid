@@ -120,13 +120,14 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
                 val snapshot = apiService.collection("users").document(currentUser.uid).collection("favorites").get().await()
                 snapshot.documents.forEach { document ->
                     document.toObject<UserFavouriteResponse>()?.let { favorites ->
-                        val item = favorites.propertyId?.let {
+                        val propertySnapshot = favorites.propertyId?.let {
                             apiService.collection("properties").document(
                                 it
                             ).get().await()
                         }
-                        if (item != null) {
-                            item.toObject<FavouritesResponse>()?.let {
+                        if (propertySnapshot != null) {
+                            propertySnapshot.toObject<FavouritesResponse>()?.let { it
+                                it.id = document.id
                                 items.add(it)
                             }
                         }

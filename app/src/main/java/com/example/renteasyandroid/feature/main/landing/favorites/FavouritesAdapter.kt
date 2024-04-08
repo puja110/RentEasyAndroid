@@ -92,6 +92,8 @@ class FavouritesAdapter(
             binding.ivFavourite.setOnClickListener {
                 binding.ivFavourite.setImageResource(R.drawable.ic_heart)
                 onItemSelectedListener(obj)
+                dataList.remove(obj)
+                notifyDataSetChanged()
             }
 
         }
