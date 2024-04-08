@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.renteasyandroid.R
 import com.example.renteasyandroid.base.BaseActivity
@@ -19,6 +21,7 @@ import com.example.renteasyandroid.utils.ProgressDialog
 import com.example.renteasyandroid.utils.SharedPreferenceManager
 import com.example.renteasyandroid.utils.Status
 import com.example.renteasyandroid.utils.showToast
+import com.google.firebase.auth.FirebaseAuth
 import www.sanju.motiontoast.MotionToastStyle
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -75,7 +78,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     preference.password = password
                 }
                 prefs.setUsername = email
-                viewModel.authenticateUser(email, password)
+
+                userSignIn()
             }
         }
         binding.btnCreateAccount.setOnClickListener {
@@ -84,6 +88,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         binding.tvForgotPassword.setOnClickListener {
             ForgotPasswordActivity.start(this)
         }
+    }
+
+    private fun userSignIn() {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d("Login success: ", "signInWithEmail:success")
+                    MainActivity.start(this)
+                } else {
+                    Log.w("Login failed: ", "signInWithEmail:failure", task.exception)
+                    Toast.makeText(this, "Authentication failed, check your login credential.", Toast.LENGTH_SHORT,).show()
+                }
+            }
     }
 
     private fun isValid(): Boolean {
