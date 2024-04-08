@@ -9,11 +9,8 @@ import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesRespons
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
 import com.example.renteasyandroid.remote.FirebaseApiService
-import com.example.renteasyandroid.remote.ApiService
 import com.google.firebase.firestore.toObject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class MainRemoteImpl private constructor() : MainRepository.Remote {
 
