@@ -1,6 +1,7 @@
 package com.example.renteasyandroid.feature.auth.data
 
 import android.content.Context
+import com.example.renteasyandroid.database.entity.UserEntity
 import com.example.renteasyandroid.feature.auth.data.local.AuthLocalImpl
 import com.example.renteasyandroid.feature.auth.data.remote.AuthRemoteImpl
 import kotlinx.coroutines.Dispatchers
@@ -33,16 +34,16 @@ class AuthRepositoryImpl constructor(
         }
     }
 
-    override suspend fun registerUser(email: String, password: String): Boolean {
+    override suspend fun insert(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val response = remoteRepository.registerUser(email, password)
+            val response = localRepository.register(email, password)
             response
         }
     }
 
     override suspend fun authenticateUser(email: String, password: String): String {
         return withContext(Dispatchers.IO) {
-            val response = remoteRepository.authenticateUser(email, password)
+            val response = localRepository.authenticateUser(email, password)
             response
         }
     }
