@@ -353,6 +353,77 @@
                     app:layout_constraintStart_toStartOf="@id/rv_nearest_facilities"
                     app:layout_constraintTop_toBottomOf="@id/tv_descripton" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtReviewsAndRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/sansf_regular"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Ratings &amp; Feedback"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_message" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/llayout"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/txtReviewsAndRating"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/txtReviewsAndRating"
+                    app:layout_constraintTop_toBottomOf="@id/txtReviewsAndRating">
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etWrite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorAccent"
+                    android:clickable="true"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="@color/grey_808080"
+                    android:ellipsize="end"
+                    android:focusable="false"
+                    android:fontFamily="@font/sansf_regular"
+                    android:gravity="center"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:text="Click here to give review"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/grey_808080"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/llayout"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/llayout"
+                    app:layout_constraintTop_toBottomOf="@id/llayout"
+                    tools:ignore="Autofill" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRatings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/txtReviewsAndRating"
+                    app:layout_constraintStart_toStartOf="@id/txtReviewsAndRating"
+                    app:layout_constraintTop_toBottomOf="@id/etWrite"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_ratings_review" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_proceed_payment"
                     android:layout_width="0dp"
@@ -360,12 +431,12 @@
                     android:layout_margin="@dimen/spacing_16"
                     android:clipToPadding="false"
                     app:cardBackgroundColor="@color/colorMain"
-                    app:cardCornerRadius="@dimen/spacing_32"
+                    app:cardCornerRadius="@dimen/spacing_16"
                     app:cardElevation="0dp"
                     app:cardUseCompatPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description_message">
+                    app:layout_constraintTop_toBottomOf="@id/rvRatings">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/ll_payment"

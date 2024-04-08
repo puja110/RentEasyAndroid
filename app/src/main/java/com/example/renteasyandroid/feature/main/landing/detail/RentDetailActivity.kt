@@ -3,7 +3,9 @@ package com.example.renteasyandroid.feature.main.landing.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.renteasyandroid.R
@@ -123,7 +125,19 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>() {
             )
             shareIntent.type = "text/plain"
             startActivity(Intent.createChooser(shareIntent, "Share"))
+        }
 
+        binding.etWrite.setOnClickListener {
+            val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .create()
+            val view = layoutInflater.inflate(R.layout.dialog_ratings, null)
+            val ivDismiss = view.findViewById<Button>(R.id.btnCancel)
+            builder.setView(view)
+            ivDismiss.setOnClickListener {
+                builder.dismiss()
+            }
+            builder.setCanceledOnTouchOutside(false)
+            builder.show()
         }
     }
 
