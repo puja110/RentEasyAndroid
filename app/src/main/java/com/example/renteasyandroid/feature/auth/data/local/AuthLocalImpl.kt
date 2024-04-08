@@ -24,34 +24,4 @@ class AuthLocalImpl private constructor(
             return AuthLocalImpl(database).also { instance = it }
         }
     }
-
-    //inserts the created users data to the local database
-    override suspend fun register(email: String, password: String): Boolean {
-
-        return try {
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                email, password
-            ).await()
-            // Create a new user account with email and password
-            true
-        } catch (e: Exception) {
-            // Handle registration failure
-            val errorMessage = "Registration failed: ${e.message}"
-            // You can log the error or handle it as needed
-            false
-        }
-    }
-
-
-    override suspend fun authenticateUser(email: String, password: String): String {
-                    return try {
-                        val response = FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
-                        response.user?.uid ?: ""
-                    } catch (e: Exception) {
-                        // Handle sign-in failure
-                        "Sign-in failed: ${e.message}"
-                    }
-
-    }
-
 }

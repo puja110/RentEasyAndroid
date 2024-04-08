@@ -27,15 +27,15 @@ class AuthRepositoryImpl constructor(
         }
     }
 
-    override suspend fun getData(): String {
+    suspend fun getData(): String {
         return withContext(Dispatchers.IO) {
             ""
         }
     }
 
-    override suspend fun registerUser(email: String, password: String): Boolean {
+     override suspend fun signup(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val response = remoteRepository.registerUser(email, password)
+            val response = remoteRepository.register(email, password)
             response
         }
     }
