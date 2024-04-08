@@ -112,9 +112,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
 
 
     //    observes Status with Status types Loading, Complete and Error
-//    Loading : to show the loading
-//    Complete : Called when success
-//    Error : called when there is an error
+    //    Loading : to show the loading
+    //    Complete : Called when success
+    //    Error : called when there is an error
     private fun observeRegisterResponse() {
         viewModel.registerResponse.observe(this) { response ->
             when (response.status) {

@@ -13,7 +13,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.renteasyandroid.feature.auth.data.AuthRepository
 import com.example.renteasyandroid.feature.auth.data.AuthRepositoryImpl
 import com.example.renteasyandroid.utils.Response
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -41,7 +40,6 @@ class LoginViewModel(
         loginUseCase
 
     //cancels the scope of viewmodel if the viewmodel lifecycle gets destroyed
-
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)

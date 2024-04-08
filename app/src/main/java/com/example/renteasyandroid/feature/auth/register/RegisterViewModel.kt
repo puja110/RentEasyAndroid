@@ -60,15 +60,7 @@ class RegisterViewModel(
         viewModelScope.launch {
             registerUseCase.value = Response.loading()
             try {
-                val entity = UserEntity(
-                    firstName = firstName,
-                    lastName = lastName,
-                    email = email,
-                    phoneNumber = phoneNumber,
-                    password = password
-                )
-
-                registerUseCase.value = Response.complete(repository.insert(entity))
+                registerUseCase.value = Response.complete(repository.registerUser(email, password))
             } catch (error: Exception) {
                 error.printStackTrace()
                 registerUseCase.value = Response.error(error)
