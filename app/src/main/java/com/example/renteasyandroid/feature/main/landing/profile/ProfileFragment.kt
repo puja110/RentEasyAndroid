@@ -49,6 +49,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             val i = Intent(requireContext(), EditProfileActivity::class.java)
             startActivity(i)
         }
+        binding.cvAboutUs.setOnClickListener {
+            val i = Intent(requireContext(), AboutUsActivity::class.java)
+            startActivity(i)
+        }
     }
 
     override fun initObservers() {
