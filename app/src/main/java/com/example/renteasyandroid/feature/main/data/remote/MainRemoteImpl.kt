@@ -8,7 +8,11 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserFavouriteResponse
 import com.example.renteasyandroid.remote.FirebaseApiService
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
@@ -17,6 +21,8 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
     private val apiService by lazy {
         FirebaseApiService.getInstance()
     }
+
+    private val currentUser = Firebase.auth.currentUser
 
     companion object {
         @Volatile
@@ -29,6 +35,7 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             }
             return MainRemoteImpl().also { instance = it }
         }
+        private const val TAG = "MainRemoteImpl"
     }
 
     override suspend fun getCategories(): List<CategoryResponse> {
@@ -69,13 +76,30 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
-    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>  {
+    override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
+        val currentUser = Firebase.auth.currentUser
         return try {
+            if (currentUser == null) {
+                Log.w("Error", "No authenticated user found")
+                return emptyList()
+            }
+
+            // Fetch the list of favourite property IDs once
+            val favouritesSnapshot = apiService.collection("users")
+                .document(currentUser.uid)
+                .collection("favorites")
+                .get().await()
+
+            val favouriteIds = favouritesSnapshot.documents.map { it.id }
+
+
             val snapshot = apiService.collection("properties").get().await()
             val items = mutableListOf<RecentlyUpdatedResponse>()
             for (document in snapshot.documents) {
                 document.toObject<RecentlyUpdatedResponse>()?.let { recentlyUpdated ->
-                    recentlyUpdated.id = document.id
+                    // Check if the current property's ID is in the list of favourite IDs
+                    recentlyUpdated.isFavourite = favouriteIds.contains(document.id)
+                    recentlyUpdated.id = document.id // Assuming RecentlyUpdatedResponse has an 'id' field
                     Log.d("recently updated", recentlyUpdated.toString())
                     items.add(recentlyUpdated)
                 }
@@ -83,68 +107,39 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
 
             items
         } catch (e: Exception) {
-            // Handle the exception, e.g., log it or return an empty list
-            throw Error(e)
+            Log.e("Error", "Error fetching recently updated properties", e)
+            emptyList() // Return an empty list in case of error
         }
     }
 
     override suspend fun getFavouritesResponse(): List<FavouritesResponse> {
-        val items = mutableListOf<FavouritesResponse>()
-        items.add(
-            FavouritesResponse(
-                id = 1,
-                title = "Small nature friendly house",
-                image = "https://images.pexels.com/photos/277667/pexels-photo-277667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "2400",
-                currency_code = "$",
-                price_type = "month",
-                status = "Available"
-            )
-        )
+        return try {
 
-        items.add(
-            FavouritesResponse(
-                id = 2,
-                title = "Apartment with great sea view",
-                image = "https://images.pexels.com/photos/7475561/pexels-photo-7475561.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "5260",
-                currency_code = "$",
-                price_type = "month",
-                status = "Booked"
-            )
-        )
-        items.add(
-            FavouritesResponse(
-                id = 3,
-                title = "Countryside home",
-                image = "https://images.pexels.com/photos/3935328/pexels-photo-3935328.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "5260",
-                currency_code = "$",
-                price_type = "month",
-                status = "Booked"
-            )
-        )
-        items.add(
-            FavouritesResponse(
-                id = 4,
-                title = "Small nature friendly house",
-                image = "https://images.pexels.com/photos/10553915/pexels-photo-10553915.jpeg?auto=compress&cs=tinysrgb&w=1200&lazy=load",
-                address = "Owen street, Barrie",
-                roomCount = "2",
-                price = "2400",
-                currency_code = "$",
-                price_type = "month",
-                status = "Available"
-            )
-        )
-
-        return items
+            val items = mutableListOf<FavouritesResponse>()
+            if (currentUser != null) {
+                val snapshot = apiService.collection("users").document(currentUser.uid).collection("favorites").get().await()
+                snapshot.documents.forEach { document ->
+                    document.toObject<UserFavouriteResponse>()?.let { favorites ->
+                        val propertySnapshot = favorites.propertyId?.let {
+                            apiService.collection("properties").document(
+                                it
+                            ).get().await()
+                        }
+                        if (propertySnapshot != null) {
+                            propertySnapshot.toObject<FavouritesResponse>()?.let { it
+                                it.id = document.id
+                                items.add(it)
+                            }
+                        }
+                    }
+                }
+            }
+            items
+        } catch (e: Exception) {
+            // Handle the exception, e.g., log it or return an empty list
+            Log.e("Firestore Error", "Error fetching document", e)
+            emptyList()
+        }
     }
 
     override suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse> {
@@ -239,6 +234,42 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             "Success"
         } else {
             response.exception?.message.toString()
+        }
+    }
+
+    override suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean {
+        val currentUser = Firebase.auth.currentUser
+        return try {
+            // Ensure we have a logged-in user
+            if (currentUser != null) {
+                // Reference to the "favorites" subcollection under the user's document
+                val favoritesSubcollectionRef = apiService.collection("users").document(currentUser.uid).collection("favorites")
+
+                if (remove) {
+                    // Query the subcollection for documents with the matching "propertyId"
+                    val querySnapshot = favoritesSubcollectionRef.whereEqualTo("propertyId", propertyId).get().await()
+
+                    // Delete all documents that match the query (should be only one if "propertyId" is unique)
+                    querySnapshot.documents.forEach { document ->
+                        document.reference.delete().await()
+                    }
+                    true
+                } else {
+                    // Create or overwrite a document with the given propertyId in the "favorites" subcollection
+                    // Here, we're directly using the propertyId as the document ID for simplicity
+                    // The favoriteData map can contain additional information if needed
+                    val favoriteData = hashMapOf("propertyId" to propertyId)
+                    favoritesSubcollectionRef.document(propertyId).set(favoriteData).await()
+                    Log.d(TAG, "Favorite added successfully: $propertyId")
+                    true
+                }
+            } else {
+                Log.w(TAG, "No authenticated user found")
+                false
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Error processing favorite", e)
+            false
         }
     }
 

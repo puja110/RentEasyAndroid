@@ -110,7 +110,7 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
             description: String,
             owner: String,
             price: String,
-            countryCode: String
+            countryCode: String,
         ) {
             val intent = Intent(activity, RentDetailActivity::class.java)
             // intent.putExtra("id", id)

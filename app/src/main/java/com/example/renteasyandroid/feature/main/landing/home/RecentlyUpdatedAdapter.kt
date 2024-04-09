@@ -1,5 +1,6 @@
 package com.example.renteasyandroid.feature.main.landing.home
 
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import com.bumptech.glide.Glide
@@ -41,7 +42,8 @@ class RecentlyUpdatedAdapter(
         override fun bindView(obj: RecentlyUpdatedResponse) {
             super.bindView(obj)
             binding.tvTitle.text = obj.propertyName
-            if (!obj.imageUrls.isNullOrEmpty() && obj.imageUrls.size > 0) {
+
+            if (!obj.imageUrls.isNullOrEmpty() && obj.imageUrls.isNotEmpty()) {
                 Glide.with(binding.root.context)
                     .load(obj.imageUrls[0]) // Since we've already checked for null or empty, directly access the first item
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -54,14 +56,14 @@ class RecentlyUpdatedAdapter(
                     .into(binding.ivRecentlyUpdated)
             }
 
-            binding.tvPer.text = "/ ${obj.propertyCategory}"
+            binding.tvPer.text = obj.propertyCategory
             binding.tvAddress.text = obj.propertyAddress
             binding.tvRoomCount.text = "${obj.propertySize} room"
-            binding.tvPrice.text = "CA ${obj.propertyAmount}"
+            binding.tvPrice.text = "$ ${obj.propertyAmount}"
             binding.tvStatus.text = if (obj.isBooked == true) "Booked" else "Available"
 
             val status = if (obj.isBooked == true) "Booked" else "Available"
-            if (status == "Booked") {
+            if (status == "Available") {
                 binding.tvStatus.setTextColor(
                     ContextCompat.getColor(
                         binding.tvStatus.context,
@@ -85,9 +87,25 @@ class RecentlyUpdatedAdapter(
                 )
             }
 
+            if(obj.isFavourite == true){
+                binding.ivFavourite.setImageResource(R.drawable.ic_heart_fill)
+            }else {
+                binding.ivFavourite.setImageResource(R.drawable.ic_heart)
+
+            }
+
             binding.cvRecentlyUpdated.setOnClickListener {
+//                onItemSelectedListener(obj)
+            }
+
+            binding.ivFavourite.setOnClickListener {
+                Log.d(Companion.TAG, "bindView: ")
                 onItemSelectedListener(obj)
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "RecentlyUpdatedAdapter"
     }
 }
