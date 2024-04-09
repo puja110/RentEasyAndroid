@@ -133,15 +133,15 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                     description = description,
                     isBooked = false,
                     isNegotiable = binding.rbNegotiable.isChecked,
-                    latitude = 0.0,
-                    longitude = 0.0,
+                    latitude = 44.39710332221014,
+                    longitude = -79.69553627619078,
                     posterUserID = preference.uuid,
-                    propertyAddress = "Barrie, Canada",
+                    propertyAddress = address,
                     propertyAmount = price.toLong(),
                     propertyCategory = type,
                     propertyName = title,
                     propertySize = type,
-                    imageUrls = listOf("https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
+                    imageUrls = listOf("https://images.pexels.com/photos/221540/pexels-photo-221540.jpeg?auto=compress&cs=tinysrgb&w=800")
                 )
                 viewModel.postRent(request)
             }
