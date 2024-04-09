@@ -19,6 +19,7 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserDetail
 import com.example.renteasyandroid.utils.Response
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -69,6 +70,12 @@ class MainViewModel(
 
     private val _favoritesUpdateStatus = MutableLiveData<Response<Boolean>>()
     val favoritesUpdateStatus: LiveData<Response<Boolean>> = _favoritesUpdateStatus
+
+    private val userDetailUseCase = MutableLiveData<Response<UserDetail>>()
+    val userDetailResponse: LiveData<Response<UserDetail>> = userDetailUseCase
+
+    private val _setUserDetailStatus = MutableLiveData<Response<Boolean>>()
+    val setUserDetailStatus: LiveData<Response<Boolean>> = _setUserDetailStatus
 
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
@@ -161,7 +168,7 @@ class MainViewModel(
         }
     }
 
-    fun  setFavorite(propertyId: String, remove: Boolean) {
+    fun setFavorite(propertyId: String, remove: Boolean) {
         viewModelScope.launch {
             _favoritesUpdateStatus.value = Response.loading()
             try {
@@ -171,11 +178,45 @@ class MainViewModel(
                     getFavouritesResponse()
                     getRecentlyUpdatedResponse()
                 } else {
-                    _favoritesUpdateStatus.value = Response.error(Throwable("Failed to update favorites"))
+                    _favoritesUpdateStatus.value =
+                        Response.error(Throwable("Failed to update favorites"))
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Error updating favorites", e)
                 _favoritesUpdateStatus.value = Response.error(e)
+            }
+        }
+    }
+
+
+    fun setUserDetail(user: UserDetail) {
+        viewModelScope.launch {
+            _favoritesUpdateStatus.value = Response.loading()
+            try {
+                val result = repository.updateUserDetail(user)
+                if (result) {
+                    _setUserDetailStatus.value = Response.complete(result)
+                    getUserDetail()
+                } else {
+                    _setUserDetailStatus.value =
+                        Response.error(Throwable("Failed to update user detail"))
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error updating user", e)
+                _setUserDetailStatus.value = Response.error(e)
+            }
+        }
+    }
+
+    fun getUserDetail() {
+        viewModelScope.launch {
+            userDetailUseCase.value = Response.loading()
+            try {
+                val userDetail = repository.getUserDetail()
+                userDetailUseCase.value = Response.complete(userDetail)
+            } catch (e: Exception) {
+                Log.w(TAG, "Error fetching user details", e)
+                userDetailUseCase.value = Response.error(e)
             }
         }
     }

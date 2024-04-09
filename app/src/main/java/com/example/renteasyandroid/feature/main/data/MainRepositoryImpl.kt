@@ -8,6 +8,7 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserDetail
 import com.example.renteasyandroid.feature.main.data.remote.MainRemoteImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -80,6 +81,18 @@ class MainRepositoryImpl constructor(
     override suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean {
         return withContext(Dispatchers.IO) {
             remoteRepository.setFavorites(propertyId, remove)
+        }
+    }
+
+    override suspend fun getUserDetail(): UserDetail {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.getUserDetail()
+        }
+    }
+
+    override suspend fun updateUserDetail(user: UserDetail): Boolean {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.updateUserDetail(user)
         }
     }
 }
