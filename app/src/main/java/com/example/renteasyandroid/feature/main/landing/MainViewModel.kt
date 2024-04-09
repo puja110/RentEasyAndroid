@@ -73,6 +73,10 @@ class MainViewModel(
 
     private val userDetailUseCase = MutableLiveData<Response<UserDetail>>()
     val userDetailResponse: LiveData<Response<UserDetail>> = userDetailUseCase
+
+    private val _setUserDetailStatus = MutableLiveData<Response<Boolean>>()
+    val setUserDetailStatus: LiveData<Response<Boolean>> = _setUserDetailStatus
+
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)
@@ -174,11 +178,32 @@ class MainViewModel(
                     getFavouritesResponse()
                     getRecentlyUpdatedResponse()
                 } else {
-                    _favoritesUpdateStatus.value = Response.error(Throwable("Failed to update favorites"))
+                    _favoritesUpdateStatus.value =
+                        Response.error(Throwable("Failed to update favorites"))
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Error updating favorites", e)
                 _favoritesUpdateStatus.value = Response.error(e)
+            }
+        }
+    }
+
+
+    fun setUserDetail(user: UserDetail) {
+        viewModelScope.launch {
+            _favoritesUpdateStatus.value = Response.loading()
+            try {
+                val result = repository.updateUserDetail(user)
+                if (result) {
+                    _setUserDetailStatus.value = Response.complete(result)
+                    getUserDetail()
+                } else {
+                    _setUserDetailStatus.value =
+                        Response.error(Throwable("Failed to update user detail"))
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error updating user", e)
+                _setUserDetailStatus.value = Response.error(e)
             }
         }
     }

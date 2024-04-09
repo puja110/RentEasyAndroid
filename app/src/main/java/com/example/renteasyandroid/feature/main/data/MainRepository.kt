@@ -24,6 +24,7 @@ interface MainRepository {
         suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
         suspend fun postRent(request: AddPostRequest): String
         suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean
+        suspend fun updateUserDetail(user: UserDetail): Boolean
     }
 
     suspend fun getCategories(): List<CategoryResponse>
@@ -35,4 +36,5 @@ interface MainRepository {
     suspend fun postRent(request: AddPostRequest): String
     suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean
     suspend fun getUserDetail(): UserDetail
+    suspend fun updateUserDetail(user: UserDetail): Boolean
 }

@@ -47,6 +47,30 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         } ?: throw Exception("No authenticated user found.")
     }
 
+    override suspend fun updateUserDetail(user: UserDetail): Boolean {
+        val currentUser = Firebase.auth.currentUser
+        return try {
+            // Fetch the current user document from Firestore
+            val docRef = currentUser?.let { apiService.collection("users").document(it.uid) }
+            val snapshot = docRef?.get()?.await()
+            val existingUser = snapshot?.toObject<UserDetail>() ?: UserDetail()
+
+            // Create a map to hold the updated user details
+            val updatedUserMap = hashMapOf<String, Any>()
+
+            // Check each field in inputUser for null and use existing values if null
+            updatedUserMap["email"] = user.email ?: existingUser.email.toString()
+            updatedUserMap["firstName"] = user.firstName ?: existingUser.firstName.toString()
+            updatedUserMap["lastName"] = user.lastName ?: existingUser.lastName.toString()
+            updatedUserMap["phoneNumber"] = user.phoneNumber ?: existingUser.phoneNumber.toString()
+            docRef?.set(updatedUserMap)?.await()
+            true
+        } catch (e: Exception) {
+            Log.w(TAG, "Error updating user details", e)
+            false
+        }
+    }
+
     override suspend fun getCategories(): List<CategoryResponse> {
         val items = mutableListOf<CategoryResponse>()
         items.add(

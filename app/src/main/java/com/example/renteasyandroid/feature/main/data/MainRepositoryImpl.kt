@@ -89,4 +89,10 @@ class MainRepositoryImpl constructor(
             remoteRepository.getUserDetail()
         }
     }
+
+    override suspend fun updateUserDetail(user: UserDetail): Boolean {
+        return withContext(Dispatchers.IO) {
+            remoteRepository.updateUserDetail(user)
+        }
+    }
 }
