@@ -19,6 +19,7 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserDetail
 import com.example.renteasyandroid.utils.Response
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -70,6 +71,8 @@ class MainViewModel(
     private val _favoritesUpdateStatus = MutableLiveData<Response<Boolean>>()
     val favoritesUpdateStatus: LiveData<Response<Boolean>> = _favoritesUpdateStatus
 
+    private val userDetailUseCase = MutableLiveData<Response<UserDetail>>()
+    val userDetailResponse: LiveData<Response<UserDetail>> = userDetailUseCase
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)
@@ -161,7 +164,7 @@ class MainViewModel(
         }
     }
 
-    fun  setFavorite(propertyId: String, remove: Boolean) {
+    fun setFavorite(propertyId: String, remove: Boolean) {
         viewModelScope.launch {
             _favoritesUpdateStatus.value = Response.loading()
             try {
@@ -176,6 +179,19 @@ class MainViewModel(
             } catch (e: Exception) {
                 Log.w(TAG, "Error updating favorites", e)
                 _favoritesUpdateStatus.value = Response.error(e)
+            }
+        }
+    }
+
+    fun getUserDetail() {
+        viewModelScope.launch {
+            userDetailUseCase.value = Response.loading()
+            try {
+                val userDetail = repository.getUserDetail()
+                userDetailUseCase.value = Response.complete(userDetail)
+            } catch (e: Exception) {
+                Log.w(TAG, "Error fetching user details", e)
+                userDetailUseCase.value = Response.error(e)
             }
         }
     }

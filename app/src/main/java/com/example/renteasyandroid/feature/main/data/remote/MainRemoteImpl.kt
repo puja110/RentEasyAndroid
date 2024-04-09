@@ -8,11 +8,11 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserDetail
 import com.example.renteasyandroid.feature.main.data.model.UserFavouriteResponse
 import com.example.renteasyandroid.remote.FirebaseApiService
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
@@ -35,7 +35,16 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             }
             return MainRemoteImpl().also { instance = it }
         }
+
         private const val TAG = "MainRemoteImpl"
+    }
+
+    override suspend fun getUserDetail(): UserDetail {
+        currentUser?.let { user ->
+            val snapshot = apiService.collection("users").document(user.uid).get().await()
+            val userDetail = snapshot.toObject(UserDetail::class.java)
+            return userDetail ?: throw Exception("User details not found.")
+        } ?: throw Exception("No authenticated user found.")
     }
 
     override suspend fun getCategories(): List<CategoryResponse> {
@@ -99,7 +108,8 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
                 document.toObject<RecentlyUpdatedResponse>()?.let { recentlyUpdated ->
                     // Check if the current property's ID is in the list of favourite IDs
                     recentlyUpdated.isFavourite = favouriteIds.contains(document.id)
-                    recentlyUpdated.id = document.id // Assuming RecentlyUpdatedResponse has an 'id' field
+                    recentlyUpdated.id =
+                        document.id // Assuming RecentlyUpdatedResponse has an 'id' field
                     Log.d("recently updated", recentlyUpdated.toString())
                     items.add(recentlyUpdated)
                 }
@@ -117,7 +127,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
 
             val items = mutableListOf<FavouritesResponse>()
             if (currentUser != null) {
-                val snapshot = apiService.collection("users").document(currentUser.uid).collection("favorites").get().await()
+                val snapshot =
+                    apiService.collection("users").document(currentUser.uid).collection("favorites")
+                        .get().await()
                 snapshot.documents.forEach { document ->
                     document.toObject<UserFavouriteResponse>()?.let { favorites ->
                         val propertySnapshot = favorites.propertyId?.let {
@@ -126,7 +138,8 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
                             ).get().await()
                         }
                         if (propertySnapshot != null) {
-                            propertySnapshot.toObject<FavouritesResponse>()?.let { it
+                            propertySnapshot.toObject<FavouritesResponse>()?.let {
+                                it
                                 it.id = document.id
                                 items.add(it)
                             }
@@ -243,11 +256,14 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
             // Ensure we have a logged-in user
             if (currentUser != null) {
                 // Reference to the "favorites" subcollection under the user's document
-                val favoritesSubcollectionRef = apiService.collection("users").document(currentUser.uid).collection("favorites")
+                val favoritesSubcollectionRef =
+                    apiService.collection("users").document(currentUser.uid).collection("favorites")
 
                 if (remove) {
                     // Query the subcollection for documents with the matching "propertyId"
-                    val querySnapshot = favoritesSubcollectionRef.whereEqualTo("propertyId", propertyId).get().await()
+                    val querySnapshot =
+                        favoritesSubcollectionRef.whereEqualTo("propertyId", propertyId).get()
+                            .await()
 
                     // Delete all documents that match the query (should be only one if "propertyId" is unique)
                     querySnapshot.documents.forEach { document ->

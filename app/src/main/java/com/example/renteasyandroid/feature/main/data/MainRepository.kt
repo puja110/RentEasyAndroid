@@ -6,6 +6,7 @@ import com.example.renteasyandroid.feature.main.data.model.FavouritesResponse
 import com.example.renteasyandroid.feature.main.data.model.HomeFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.NearPublicFacilitiesResponse
 import com.example.renteasyandroid.feature.main.data.model.RecentlyUpdatedResponse
+import com.example.renteasyandroid.feature.main.data.model.UserDetail
 
 interface MainRepository {
     interface Local {
@@ -14,6 +15,8 @@ interface MainRepository {
     }
 
     interface Remote {
+
+        suspend fun getUserDetail(): UserDetail
         suspend fun getCategories(): List<CategoryResponse>
         suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse>
         suspend fun getFavouritesResponse(): List<FavouritesResponse>
@@ -31,4 +34,5 @@ interface MainRepository {
     suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
     suspend fun postRent(request: AddPostRequest): String
     suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean
+    suspend fun getUserDetail(): UserDetail
 }
