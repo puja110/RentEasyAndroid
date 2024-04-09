@@ -13,6 +13,7 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,12 @@
                 android:resource="@xml/rent_easy_widget_info" />
         </receiver>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_map_api_key"/>
+        <activity
+            android:name=".feature.main.landing.map.MapActivity"
+            android:exported="false" />
         <activity
             android:name=".feature.main.landing.profile.AboutUsActivity"
             android:exported="false" />
