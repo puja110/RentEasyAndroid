@@ -51,4 +51,7 @@
     <string name="remember_login">Remember Login</string>
     <string name="please_wait">Please wait</string>
     <string name="search">Search</string>
+    <string name="appwidget_text">RentEasy</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 </resources>
