@@ -2,6 +2,7 @@ package com.example.renteasyandroid.feature.main.landing.profile
 
 import android.app.Activity
 import android.app.Dialog
+import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,14 +28,19 @@ import www.sanju.motiontoast.MotionToastStyle
 
 class EditProfileActivity : AppCompatActivity() {
 
-    private var mCameraUri = mutableListOf<Uri>()
+    private var addPropertyImage: ImageView? = null
 
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val uri = it.data?.data!!
-                mCameraUri.add(uri)
-                Log.d("mCameraUri: ", mCameraUri.toString())
+
+                if(addPropertyImage != null) {
+                    Glide.with(this)
+                        .load(uri)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.logo).into(addPropertyImage!!)
+                }
             } else {
                 parseError(it)
             }
@@ -59,24 +65,20 @@ class EditProfileActivity : AppCompatActivity() {
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPhone = findViewById<EditText>(R.id.etPhone)
         val btnProfileEdit = findViewById<AppCompatButton>(R.id.btnProfileEdit)
-        val addPropertyImage = findViewById<ImageView>(R.id.iv_add_property_image)
+        addPropertyImage = findViewById(R.id.iv_add_property_image)
 
         btnBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        addPropertyImage.setOnClickListener {
-            if (mCameraUri.size < 5) {
-                cameraLauncher.launch(
-                    ImagePicker.with(this)
-                        .crop()
-                        .cameraOnly()
-                        .maxResultSize(1080, 1920, true)
-                        .createIntent()
-                )
-            } else {
-                showToast("Warning", "You can only add 5 images", MotionToastStyle.WARNING)
-            }
+        addPropertyImage?.setOnClickListener {
+            cameraLauncher.launch(
+                ImagePicker.with(this)
+                    .crop()
+                    .cameraOnly()
+                    .maxResultSize(1080, 1920, true)
+                    .createIntent()
+            )
         }
 
         btnProfileEdit.setOnClickListener {
@@ -85,12 +87,6 @@ class EditProfileActivity : AppCompatActivity() {
             val email = etEmail.text.toString().trim()
             val phone = etPhone.text.toString().trim()
 
-            if(mCameraUri.isNotEmpty()) {
-                Glide.with(this)
-                    .load(mCameraUri)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.logo).into(addPropertyImage)
-            }
 
             if (firstname.isEmpty()) {
                 val snackbar = Snackbar

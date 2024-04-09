@@ -100,30 +100,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 Status.COMPLETE -> {
                     binding.progressBar.visibility = View.GONE
                     response.data?.let {
-                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response ->
+                        rAdapter = RecentlyUpdatedAdapter(it.toMutableList()) { response, isFavoriteClick ->
                             Log.d(TAG, "observeRecentlyUpdatedResponse: ${response.propertyName}")
-                            if (response.isFavourite == null || response.isFavourite != true) {
-                                response.id?.let { it1 ->
-                                    viewModel.setFavorite(it1, false)
-                                    response.isFavourite = true
+                            if(isFavoriteClick) {
+                                if (response.isFavourite == null || response.isFavourite != true) {
+                                    response.id?.let { it1 ->
+                                        viewModel.setFavorite(it1, false)
+                                        response.isFavourite = true
+                                    }
+                                } else {
+                                    response.id?.let { it1 ->
+                                        viewModel.setFavorite(it1, true)
+                                        response.isFavourite = false
+                                    }
                                 }
                             } else {
-                                response.id?.let { it1 ->
-                                    viewModel.setFavorite(it1, true)
-                                    response.isFavourite = false
-                                }
+                                RentDetailActivity.start(
+                                    requireActivity(),
+                                    response.imageUrls?.get(0) ?: "",
+                                    response.propertyName ?: "",
+                                    response.propertyAddress ?: "",
+                                    response.propertySize ?: "",
+                                    response.description ?: "",
+                                    response.posterUserID ?: "",
+                                    response.propertyAmount.toString(),
+                                    "$",
+                                )
                             }
-//                            RentDetailActivity.start(
-//                                requireActivity(),
-//                                response.imageUrls?.get(0) ?: "",
-//                                response.propertyName ?: "",
-//                                response.propertyAddress ?: "",
-//                                response.propertySize ?: "",
-//                                response.description ?: "",
-//                                response.posterUserID ?: "",
-//                                response.propertyAmount.toString(),
-//                                "$",
-//                            )
                         }
                         binding.rvRecentlyUpdated.adapter = rAdapter
                     }

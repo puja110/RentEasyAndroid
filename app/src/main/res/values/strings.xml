@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">RentalDemo</string>
+    <string name="app_name_rent_easy">RentEasy</string>
     <string name="email">Email</string>
     <string name="log_in">Log In</string>
     <string name="password">Password</string>
@@ -54,4 +55,13 @@
     <string name="appwidget_text">RentEasy</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="channel_name">My Notification Channel</string>
+    <string name="channel_description">My Notification Description</string>
+    <string name="notification_title">Congrats!</string>
+    <string name="notification_message">Your item has posted successfully!</string>
+    <string name="alert_title">Alert!</string>
+    <string name="alert_message">Do you want to proceed to manage notification permission?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="package_name">package</string>
 </resources>
