@@ -85,12 +85,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap?.isMyLocationEnabled = true
 
         mMap?.setOnMapClickListener { latlng -> // Clears the previously touched position
-            mMap?.clear();
+            mMap?.clear()
             // Animating to the touched position
-            mMap?.animateCamera(CameraUpdateFactory.newLatLng(latlng));
-
-            val location = LatLng(latlng.latitude, latlng.longitude)
-            mMap?.addMarker(MarkerOptions().position(location))
+            mMap?.animateCamera(CameraUpdateFactory.newLatLng(latlng))
+            val markerOptions = MarkerOptions().position(latlng).title("Current Location")
+            mMap?.addMarker(markerOptions)
         }
     }
 
