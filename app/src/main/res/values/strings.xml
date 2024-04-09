@@ -64,4 +64,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="package_name">package</string>
+    <string name="google_map_api_key">AIzaSyA4x6TTFkhv6nKCtnWtUjC2kffOH4spB_k</string>
 </resources>

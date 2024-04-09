@@ -1,5 +1,6 @@
 package com.example.renteasyandroid.feature.main.landing.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +13,8 @@ import com.example.renteasyandroid.base.BaseFragment
 import com.example.renteasyandroid.databinding.FragmentHomeBinding
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
 import com.example.renteasyandroid.feature.main.landing.detail.RentDetailActivity
+import com.example.renteasyandroid.feature.main.landing.map.MapActivity
+import com.example.renteasyandroid.feature.main.landing.profile.AboutUsActivity
 import com.example.renteasyandroid.search.SearchActivity
 import com.example.renteasyandroid.utils.Status
 
@@ -45,6 +48,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.includeSearch.constraintSearch.setOnClickListener {
             SearchActivity.start(requireActivity())
+        }
+
+        binding.includeToolbar.ivLocation.setOnClickListener {
+            val i = Intent(requireContext(), MapActivity::class.java)
+            startActivity(i)
         }
     }
 
