@@ -1,12 +1,24 @@
 package com.example.renteasyandroid.feature.main.landing.add
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +43,12 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
     private var adapter: PropertyImageAdapter? = null
     private lateinit var preference: SharedPreferenceManager
     private lateinit var dialog: Dialog
+
+    // define a constant variable for the notification channel ID
+    private val CHANNEL_ID = "MY_CHANNEL"
+
+    // initialize a variable to set the unique identifier
+    private var notificationId = 1
 
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -66,6 +84,9 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
         super.onViewCreated(view, savedInstanceState)
         preference = SharedPreferenceManager(requireContext())
 
+        // calling function to create notification channel
+        createNotificationChannel()
+
         adapter = PropertyImageAdapter(mCameraUri, {})
         val layoutManager = LinearLayoutManager(
             requireActivity(),
@@ -89,7 +110,9 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
             }
         }
 
-        binding.btnLogin.setOnClickListener {
+        binding.btnSubmit.setOnClickListener {
+            handleNotification()
+
             val title = binding.etTitle.text.toString().trim()
             val type = binding.etType.text.toString().trim()
             val price = binding.etPrice.text.toString().trim()
@@ -123,6 +146,69 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                 viewModel.postRent(request)
             }
         }
+    }
+
+    private fun handleNotification() {
+        // creating notification builder instance
+        var builder = NotificationCompat.Builder(requireActivity(), CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(getString(R.string.notification_title))
+            .setContentText(getString(R.string.notification_message))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        // check if the notification permission is granted
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // show the alert dialog to manage permission
+            showNotificationPermissionAlert();
+        }
+
+        val id = notificationId ++
+
+        // build and display the notification
+        val notificationManagerCompat = NotificationManagerCompat.from(requireActivity())
+        notificationManagerCompat.notify(id, builder.build())
+    }
+
+    private fun createNotificationChannel() {
+        // Create the Notification Channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.app_name_rent_easy)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+
+            // register the channel with the system
+            val notificationManager: NotificationManager =
+                requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun showNotificationPermissionAlert() {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(R.string.alert_title)
+        builder.setMessage(R.string.alert_message)
+        builder.setPositiveButton(R.string.yes) { dialog, which ->
+            // allows the user to view and manage permissions and settings for the app
+            val intent = Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.fromParts(getString(R.string.package_name), "com.example.renteasyandroid", null)
+            )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+        builder.setNegativeButton(R.string.no) { dialog, which ->
+            dialog.dismiss()
+        }
+
+        // create and show the dialog
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     override fun initObservers() {
