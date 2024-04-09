@@ -28,7 +28,7 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    //  gets favourites list through viewmodel
+        //  gets favourites list through viewmodel
         viewModel.getFavouritesResponse()
     }
 
@@ -49,7 +49,11 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>() {
 
                 Status.COMPLETE -> {
                     response.data?.let {
-                        adapter = FavouritesAdapter(it.toMutableList()) { response -> }
+                        adapter = FavouritesAdapter(it.toMutableList()) { response ->
+                            response.id?.let { it1 ->
+                                viewModel.setFavorite(it1, true)
+                            }
+                        }
                         binding.rvFavourites.adapter = adapter
                     }
                 }

@@ -19,9 +19,8 @@ interface MainRepository {
         suspend fun getFavouritesResponse(): List<FavouritesResponse>
         suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse>
         suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
-        suspend fun postRent(
-            request: AddPostRequest
-        ): String
+        suspend fun postRent(request: AddPostRequest): String
+        suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean
     }
 
     suspend fun getCategories(): List<CategoryResponse>
@@ -30,8 +29,6 @@ interface MainRepository {
     suspend fun getFavouritesResponse(): List<FavouritesResponse>
     suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse>
     suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse>
-
-    suspend fun postRent(
-        request: AddPostRequest
-    ): String
+    suspend fun postRent(request: AddPostRequest): String
+    suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean
 }

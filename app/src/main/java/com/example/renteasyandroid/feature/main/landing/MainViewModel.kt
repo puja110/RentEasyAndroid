@@ -66,6 +66,10 @@ class MainViewModel(
     private val addPostUseCase = MutableLiveData<Response<String>>()
     val addPostResponse: LiveData<Response<String>> =
         addPostUseCase
+
+    private val _favoritesUpdateStatus = MutableLiveData<Response<Boolean>>()
+    val favoritesUpdateStatus: LiveData<Response<Boolean>> = _favoritesUpdateStatus
+
     override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
         super.onDestroy(owner)
@@ -153,6 +157,25 @@ class MainViewModel(
             } catch (error: Exception) {
                 error.printStackTrace()
                 addPostUseCase.value = Response.error(error)
+            }
+        }
+    }
+
+    fun  setFavorite(propertyId: String, remove: Boolean) {
+        viewModelScope.launch {
+            _favoritesUpdateStatus.value = Response.loading()
+            try {
+                val result = repository.setFavorites(propertyId, remove)
+                if (result) {
+                    _favoritesUpdateStatus.value = Response.complete(result)
+                    getFavouritesResponse()
+                    getRecentlyUpdatedResponse()
+                } else {
+                    _favoritesUpdateStatus.value = Response.error(Throwable("Failed to update favorites"))
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Error updating favorites", e)
+                _favoritesUpdateStatus.value = Response.error(e)
             }
         }
     }
