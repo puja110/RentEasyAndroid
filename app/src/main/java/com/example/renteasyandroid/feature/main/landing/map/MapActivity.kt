@@ -96,9 +96,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     // Function to update marker position and animate camera
     private fun updateMarkerPositionAndAnimateCamera(latLng: LatLng) {
-        mMap?.clear() // Clear previous markers
-        val markerOptions = MarkerOptions().position(latLng).title("Current Location")
-        mMap?.addMarker(markerOptions)
+        // Clear previous markers
+        mMap?.clear()
 
         // Animate camera to focus on the updated marker position
         mMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
