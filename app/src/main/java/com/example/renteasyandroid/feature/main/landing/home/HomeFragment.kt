@@ -14,7 +14,6 @@ import com.example.renteasyandroid.databinding.FragmentHomeBinding
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
 import com.example.renteasyandroid.feature.main.landing.detail.RentDetailActivity
 import com.example.renteasyandroid.feature.main.landing.map.MapActivity
-import com.example.renteasyandroid.feature.main.landing.profile.AboutUsActivity
 import com.example.renteasyandroid.search.SearchActivity
 import com.example.renteasyandroid.utils.Status
 

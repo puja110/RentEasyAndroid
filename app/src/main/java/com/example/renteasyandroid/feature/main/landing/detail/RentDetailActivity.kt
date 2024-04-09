@@ -24,6 +24,7 @@ import com.example.renteasyandroid.database.entity.UserRatingEntity
 import com.example.renteasyandroid.databinding.ActivityRentDetailBinding
 import com.example.renteasyandroid.feature.main.data.model.UserRatingResponseList
 import com.example.renteasyandroid.feature.main.landing.MainViewModel
+import com.example.renteasyandroid.feature.main.landing.map.MapActivity
 import com.example.renteasyandroid.utils.PreferenceHelper
 import com.example.renteasyandroid.utils.PreferenceHelper.setUsername
 import com.example.renteasyandroid.utils.SharedPreferenceManager
@@ -242,6 +243,11 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
             val adapter =
                 UserRatingAdapter(result as ArrayList<UserRatingEntity>) {}
             recyclerView.adapter = adapter
+        }
+
+        binding.ivLocation.setOnClickListener {
+            val i = Intent(this, MapActivity::class.java)
+            startActivity(i)
         }
     }
 
