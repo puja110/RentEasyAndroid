@@ -62,14 +62,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_add_property_image"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginTop="@dimen/spacing_8"
                     android:background="@drawable/bg_image_post"
-                    android:padding="@dimen/spacing_12"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_plain_add"
-                    app:tint="@color/colorMain" />
+                    android:scaleType="fitXY"
+                    android:padding="@dimen/spacing_4"
+                    app:srcCompat="@drawable/ic_plain_add" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/profileName"

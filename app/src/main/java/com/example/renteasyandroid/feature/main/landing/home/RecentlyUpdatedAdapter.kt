@@ -14,7 +14,7 @@ import java.util.EventListener
 
 class RecentlyUpdatedAdapter(
     private var dataList: MutableList<RecentlyUpdatedResponse>,
-    private val onItemSelectedListener: (RecentlyUpdatedResponse) -> Unit
+    private val onItemSelectedListener: (RecentlyUpdatedResponse, Boolean) -> Unit
 ) : BaseAdapter<RecentlyUpdatedResponse, RecentlyUpdatedAdapter.RecentlyUpdatedViewHolder>() {
 
     override fun getViewHolder(binding: ViewDataBinding, viewType: Int): RecentlyUpdatedViewHolder {
@@ -95,12 +95,12 @@ class RecentlyUpdatedAdapter(
             }
 
             binding.cvRecentlyUpdated.setOnClickListener {
-//                onItemSelectedListener(obj)
+                onItemSelectedListener(obj, false)
             }
 
             binding.ivFavourite.setOnClickListener {
                 Log.d(Companion.TAG, "bindView: ")
-                onItemSelectedListener(obj)
+                onItemSelectedListener(obj, true)
             }
         }
     }
