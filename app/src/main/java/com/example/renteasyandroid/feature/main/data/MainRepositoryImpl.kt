@@ -34,6 +34,15 @@ class MainRepositoryImpl constructor(
         }
     }
 
+    /**
+     *
+     * Getter and Setter function of the main repository
+     *
+     * @description: Getter and Setter of all the method interface with implementation using
+     * withContext HOF - that takes the context dispatcher.IO and within the
+     * coroutineScope calls the main method from remote/local repository
+     */
+
 
     override suspend fun getCategories(): List<CategoryResponse> {
         return withContext(Dispatchers.IO) {

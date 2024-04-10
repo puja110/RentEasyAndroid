@@ -2,6 +2,7 @@ package com.example.renteasyandroid.feature.main.landing.add
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -15,7 +16,6 @@ import android.provider.Settings
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -34,34 +34,41 @@ import com.example.renteasyandroid.utils.showToast
 import com.github.drjacky.imagepicker.ImagePicker
 import www.sanju.motiontoast.MotionToastStyle
 
+/**
+ * Fragment for posting a rent listing.
+ */
 class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
 
+    // View model for handling data operations
     private val viewModel: MainViewModel by viewModels {
         MainViewModel.provideFactory(requireContext())
     }
+
+    // List to store selected camera URIs
     private var mCameraUri = mutableListOf<Uri>()
     private var adapter: PropertyImageAdapter? = null
     private lateinit var preference: SharedPreferenceManager
     private lateinit var dialog: Dialog
 
-    // define a constant variable for the notification channel ID
+    // Define a constant variable for the notification channel ID
     private val CHANNEL_ID = "MY_CHANNEL"
 
-    // initialize a variable to set the unique identifier
+    // Initialize a variable to set the unique identifier for notifications
     private var notificationId = 1
 
-    private val cameraLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val uri = it.data?.data!!
-                mCameraUri.add(uri)
-                adapter?.updateData(mCameraUri)
-                adapter?.notifyItemChanged(mCameraUri.size - 1)
-            } else {
-                parseError(it)
-            }
+    // Activity result launcher for camera capture
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        if (activityResult.resultCode == Activity.RESULT_OK) {
+            val uri = activityResult.data?.data!!
+            mCameraUri.add(uri)
+            adapter?.updateData(mCameraUri)
+            adapter?.notifyItemChanged(mCameraUri.size - 1)
+        } else {
+            parseError(activityResult)
         }
+    }
 
+    /* Function to handle parsing errors during activity result processing */
     private fun parseError(activityResult: ActivityResult) {
         if (activityResult.resultCode == ImagePicker.RESULT_ERROR) {
             showToast("Error", ImagePicker.getError(activityResult.data), MotionToastStyle.ERROR)
@@ -70,9 +77,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
         }
     }
 
-
     override fun layout(): Int = R.layout.fragment_post_rent
-
 
     companion object {
         fun getInstance(): Fragment {
@@ -84,18 +89,15 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
         super.onViewCreated(view, savedInstanceState)
         preference = SharedPreferenceManager(requireContext())
 
-        // calling function to create notification channel
+        // Calling function to create notification channel
         createNotificationChannel()
 
         adapter = PropertyImageAdapter(mCameraUri, {})
-        val layoutManager = LinearLayoutManager(
-            requireActivity(),
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+        val layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvPropertyImage.layoutManager = layoutManager
         binding.rvPropertyImage.adapter = adapter
 
+        // Button click to add property image
         binding.ivAddPropertyImage.setOnClickListener {
             if (mCameraUri.size < 5) {
                 cameraLauncher.launch(
@@ -110,6 +112,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
             }
         }
 
+        // Button click to submit rent post
         binding.btnSubmit.setOnClickListener {
             handleNotification()
 
@@ -118,6 +121,8 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
             val price = binding.etPrice.text.toString().trim()
             val address = binding.etAddress.text.toString().trim()
             val description = binding.etDescription.text.toString().trim()
+
+            // Validate form fields
             if (title.isEmpty()) {
                 showToast("Warning", "Title field cannot be empty!", MotionToastStyle.WARNING)
             } else if (type.isEmpty()) {
@@ -129,6 +134,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
             } else if (description.isEmpty()) {
                 showToast("Warning", "Description field cannot be empty!", MotionToastStyle.WARNING)
             } else {
+                // Create request object and call ViewModel's postRent function
                 val request = AddPostRequest(
                     description = description,
                     isBooked = false,
@@ -148,30 +154,29 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
         }
     }
 
+    /* Function to handle notification creation and display */
     private fun handleNotification() {
-        // creating notification builder instance
+        // Creating notification builder instance
         var builder = NotificationCompat.Builder(requireActivity(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(getString(R.string.notification_title))
             .setContentText(getString(R.string.notification_message))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        // check if the notification permission is granted
-        if (ActivityCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // show the alert dialog to manage permission
+        // Check if the notification permission is granted
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // Show alert dialog to manage permission
             showNotificationPermissionAlert();
         }
 
-        val id = notificationId ++
+        val id = notificationId++
 
-        // build and display the notification
+        // Build and display the notification
         val notificationManagerCompat = NotificationManagerCompat.from(requireActivity())
         notificationManagerCompat.notify(id, builder.build())
     }
 
+    /* Function to create notification channel */
     private fun createNotificationChannel() {
         // Create the Notification Channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -182,23 +187,20 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                 description = descriptionText
             }
 
-            // register the channel with the system
-            val notificationManager: NotificationManager =
-                requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            // Register the channel with the system
+            val notificationManager: NotificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
 
+    /* Function to show alert dialog for managing notification permission */
     private fun showNotificationPermissionAlert() {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(R.string.alert_title)
         builder.setMessage(R.string.alert_message)
         builder.setPositiveButton(R.string.yes) { dialog, which ->
-            // allows the user to view and manage permissions and settings for the app
-            val intent = Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts(getString(R.string.package_name), "com.example.renteasyandroid", null)
-            )
+            // Allows the user to view and manage permissions and settings for the app
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts(getString(R.string.package_name), "com.example.renteasyandroid", null))
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
@@ -206,7 +208,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
             dialog.dismiss()
         }
 
-        // create and show the dialog
+        // Create and show the dialog
         val alertDialog = builder.create()
         alertDialog.show()
     }
@@ -215,6 +217,7 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
         observePostRentResponse()
     }
 
+    /* Function to observe post rent response from ViewModel */
     private fun observePostRentResponse() {
         viewModel.addPostResponse.observe(this) { response ->
             when (response.status) {
@@ -228,32 +231,25 @@ class PostRentFragment : BaseFragment<FragmentPostRentBinding>() {
                         preference.uuid = response.data
                         showToast("Success", "Rent post Successful!", MotionToastStyle.SUCCESS)
                     } else {
-                        showToast(
-                            "Error",
-                            response.data.toString(),
-                            MotionToastStyle.ERROR
-                        )
+                        showToast("Error", response.data.toString(), MotionToastStyle.ERROR)
                     }
-
                 }
 
                 Status.ERROR -> {
                     hideProgress()
-                    showToast(
-                        "Error",
-                        response.error.toString(),
-                        MotionToastStyle.ERROR
-                    )
+                    showToast("Error", response.error.toString(), MotionToastStyle.ERROR)
                 }
             }
         }
     }
 
+    /* Function to show progress dialog */
     private fun showProgress() {
         dialog = ProgressDialog.progressDialog(requireContext())
         dialog.show()
     }
 
+    /* Function to hide progress dialog */
     private fun hideProgress() {
         if (dialog.isShowing) {
             dialog.dismiss()

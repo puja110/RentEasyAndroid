@@ -146,6 +146,13 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
 
     override fun layout() = R.layout.activity_rent_detail
 
+    /**
+     * onCreate fetches all the existing user rating and displays it
+     * with the binding of elements on the activity UI file.
+     *
+     * on click of rating button it post the ratings and saves it in the local database
+     * this is the local storage option for property user ratings per user.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

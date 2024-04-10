@@ -35,12 +35,18 @@ class FavouritesAdapter(
         this.dataList = list
     }
 
+    /**
+     *  ViewHolder class to hold and bind views for each item
+     */
     inner class RecentlyUpdatedViewHolder(private var binding: ItemFavouritesBinding) :
         BaseViewHolder<FavouritesResponse>(binding) {
         override fun bindView(obj: FavouritesResponse) {
             super.bindView(obj)
+            // Bind data to views within the ViewHolder
             binding.ivFavourite.setImageResource(R.drawable.ic_heart_fill)
             binding.tvTitle.text = obj.propertyName
+
+            // Load image using Glide library
             if (!obj.imageUrls.isNullOrEmpty() && obj.imageUrls.isNotEmpty()) {
                 Glide.with(binding.root.context)
                     .load(obj.imageUrls[0]) // Since we've already checked for null or empty, directly access the first item
