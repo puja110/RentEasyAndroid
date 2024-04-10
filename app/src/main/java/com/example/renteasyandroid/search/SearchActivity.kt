@@ -82,7 +82,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                                 response.description ?: "",
                                 response.posterUserID ?: "",
                                 response.propertyAmount.toString(),
-                                "CA"
+                                "$",
+                                response.latitude!!,
+                                response.longitude!!,
                             )
                         }
                         binding.rvSearch.adapter = adapter

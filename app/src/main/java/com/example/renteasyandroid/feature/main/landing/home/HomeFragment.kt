@@ -132,6 +132,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                     response.posterUserID ?: "",
                                     response.propertyAmount.toString(),
                                     "$",
+                                    response.latitude!!,
+                                    response.longitude!!,
                                 )
                             }
                         }

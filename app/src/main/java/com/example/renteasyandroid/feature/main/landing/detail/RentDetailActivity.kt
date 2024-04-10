@@ -95,6 +95,18 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
         )
     }
 
+    private val latitude: Double? by lazy {
+        intent.getDoubleExtra(
+            "latitude", 0.0
+        )
+    }
+
+    private val longitude: Double? by lazy {
+        intent.getDoubleExtra(
+            "longitude", 0.0
+        )
+    }
+
     private var adapter: HomeFacilitiesAdapter? = null
     private var nAdapter: NearPublicFacilitiesAdapter? = null
     private var progressDialog: ProgressDialog? = null
@@ -112,6 +124,8 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
             owner: String,
             price: String,
             countryCode: String,
+            latitude: Double,
+            longitude: Double,
         ) {
             val intent = Intent(activity, RentDetailActivity::class.java)
             // intent.putExtra("id", id)
@@ -123,6 +137,8 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
             intent.putExtra("owner", owner)
             intent.putExtra("price", price)
             intent.putExtra("country_code", countryCode)
+            intent.putExtra("latitude", latitude)
+            intent.putExtra("longitude", longitude)
 
             activity.startActivity(intent)
         }
@@ -247,6 +263,8 @@ class RentDetailActivity : BaseActivity<ActivityRentDetailBinding>(), CoroutineS
 
         binding.ivLocation.setOnClickListener {
             val i = Intent(this, MapActivity::class.java)
+            i.putExtra("latitude", latitude);
+            i.putExtra("longitude", longitude);
             startActivity(i)
         }
     }

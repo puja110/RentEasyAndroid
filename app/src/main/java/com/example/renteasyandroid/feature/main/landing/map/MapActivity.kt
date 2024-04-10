@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,6 +26,18 @@ import java.util.Locale
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private val latitude: Double? by lazy {
+        intent.getDoubleExtra(
+            "latitude", 0.0
+        )
+    }
+
+    private val longitude: Double? by lazy {
+        intent.getDoubleExtra(
+            "longitude", 0.0
+        )
+    }
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 123
@@ -134,9 +147,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (location != null) {
                     val latitude: Double = location.latitude
                     val longitude: Double = location.longitude
-                    val address = getAddress(this, 44.39692173565016, -79.69086939012152)
+                    //val address = getAddress(this, 44.39692173565016, -79.69086939012152)
+                    val address = getAddress(this, latitude, longitude)
                     updateMarkerPositionAndAnimateCamera(LatLng(latitude, longitude))
-                    showAccommodationPositionAndAnimateCamera(LatLng(44.39692173565016, -79.69086939012152), address!!)
+                    showAccommodationPositionAndAnimateCamera(LatLng(latitude, longitude), address!!)
                 } else {
                     // Location data is unavailable, handle accordingly
                 }
