@@ -21,6 +21,10 @@ class SlashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun layout() = R.layout.activity_splash
 
+    /**
+     * Creates a splash screen and
+     * delays 2 seconds before it navigates back to login screen
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

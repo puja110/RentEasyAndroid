@@ -39,6 +39,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         private const val TAG = "MainRemoteImpl"
     }
 
+    /**
+     * @description: Gets all the user's details of the users collection
+     */
     override suspend fun getUserDetail(): UserDetail {
         currentUser?.let { user ->
             val snapshot = apiService.collection("users").document(user.uid).get().await()
@@ -47,6 +50,11 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         } ?: throw Exception("No authenticated user found.")
     }
 
+    /**
+     * @description : Update users detail with all the parameters like
+     * firstName, lastName, email, phoneNumber
+     * and returns true if the network call is successful
+     */
     override suspend fun updateUserDetail(user: UserDetail): Boolean {
         val currentUser = Firebase.auth.currentUser
         return try {
@@ -71,6 +79,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         }
     }
 
+    /**
+     * Fetches a static category from a mutable list of <CategoryResponse>
+     */
     override suspend fun getCategories(): List<CategoryResponse> {
         val items = mutableListOf<CategoryResponse>()
         items.add(
@@ -109,6 +120,10 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
+    /**
+     * Recently Updated Response @description: fetch recently updated response from
+     * favorites sub collection from users collection
+     */
     override suspend fun getRecentlyUpdatedResponse(): List<RecentlyUpdatedResponse> {
         val currentUser = Firebase.auth.currentUser
         return try {
@@ -148,29 +163,41 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
 
     override suspend fun getFavouritesResponse(): List<FavouritesResponse> {
         return try {
-
+            // Initialize an empty list to hold the favorite responses
             val items = mutableListOf<FavouritesResponse>()
+
+            // Check if there is a currently authenticated user
             if (currentUser != null) {
-                val snapshot =
-                    apiService.collection("users").document(currentUser.uid).collection("favorites")
-                        .get().await()
+                // Fetch the favorites subcollection for the current user from Firestore
+                val snapshot = apiService.collection("users")
+                    .document(currentUser.uid)
+                    .collection("favorites")
+                    .get()
+                    .await()
+
+                // Iterate through each document in the favorites subcollection
                 snapshot.documents.forEach { document ->
+                    // Convert the document to a UserFavouriteResponse object
                     document.toObject<UserFavouriteResponse>()?.let { favorites ->
+                        // Fetch the corresponding property details for the favorite
                         val propertySnapshot = favorites.propertyId?.let {
-                            apiService.collection("properties").document(
-                                it
-                            ).get().await()
+                            apiService.collection("properties").document(it).get().await()
                         }
+                        // Check if the property snapshot is not null
                         if (propertySnapshot != null) {
+                            // Convert the property snapshot to a FavouritesResponse object
                             propertySnapshot.toObject<FavouritesResponse>()?.let {
-                                it
+                                // Assign the document ID as the response ID
                                 it.id = document.id
+                                // Add the response to the items list
                                 items.add(it)
                             }
                         }
                     }
                 }
             }
+
+            // Return the list of favorite responses
             items
         } catch (e: Exception) {
             // Handle the exception, e.g., log it or return an empty list
@@ -179,6 +206,10 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         }
     }
 
+
+    /**
+     * Fetch Home Facilities Response: fetches a static mutable list of <HomeFacilitiesResponse>
+     */
     override suspend fun getHomeFacilitiesResponse(): List<HomeFacilitiesResponse> {
         val items = mutableListOf<HomeFacilitiesResponse>()
         items.add(
@@ -208,6 +239,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
+    /**
+     * Fetch Public Facilities Response: fetches a static mutable list of <NearPublicFacilitiesResponse>
+     */
     override suspend fun getNearPublicFacilitiesResponse(): List<NearPublicFacilitiesResponse> {
         val items = mutableListOf<NearPublicFacilitiesResponse>()
         items.add(
@@ -243,6 +277,11 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         return items
     }
 
+
+    /**
+     * Post Rent Method @description : Posts the rental submission to Firestore database
+     * Collection name: "properties"
+     */
     override suspend fun postRent(
         request: AddPostRequest
     ): String {
@@ -274,6 +313,9 @@ class MainRemoteImpl private constructor() : MainRepository.Remote {
         }
     }
 
+    /**
+     * Implementation of setting favourites in the user's sub collection named "favourites" in the Firestore collection
+     */
     override suspend fun setFavorites(propertyId: String, remove: Boolean): Boolean {
         val currentUser = Firebase.auth.currentUser
         return try {
