@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,13 +26,13 @@ import java.util.Locale
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private val latitude: Double? by lazy {
+    private val latitudeAddress: Double? by lazy {
         intent.getDoubleExtra(
             "latitude", 0.0
         )
     }
 
-    private val longitude: Double? by lazy {
+    private val longitudeAddress: Double? by lazy {
         intent.getDoubleExtra(
             "longitude", 0.0
         )
@@ -145,12 +144,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 this
             ) { location ->
                 if (location != null) {
-                    val latitude: Double = location.latitude
-                    val longitude: Double = location.longitude
-                    //val address = getAddress(this, 44.39692173565016, -79.69086939012152)
-                    val address = getAddress(this, latitude, longitude)
-                    updateMarkerPositionAndAnimateCamera(LatLng(latitude, longitude))
-                    showAccommodationPositionAndAnimateCamera(LatLng(latitude, longitude), address!!)
+                    updateMarkerPositionAndAnimateCamera(LatLng(location.latitude, location.latitude))
+                    val address = getAddress(this, latitudeAddress!!, longitudeAddress!!)
+                    showAccommodationPositionAndAnimateCamera(LatLng(latitudeAddress!!, longitudeAddress!!), address!!)
                 } else {
                     // Location data is unavailable, handle accordingly
                 }
